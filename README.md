@@ -30,5 +30,6 @@ Focado no estudo de mensageria e bancos NoSQL.
 React 
 - Vite — build rápido e leve
 - React Router DOM — roteamento
+- TypeScript
 - Mantine UI — componentes e estilização
 - Axios — requisições HTTP
