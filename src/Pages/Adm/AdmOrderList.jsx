@@ -12,7 +12,7 @@ const AdmOrderList = () => {
     const [page, setPage] = useState(1);
     const [pageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
-    const [statusFilter, setStatusFilter] = useState(null);
+    const [statusFilter, setStatusFilter] = useState("PAID");
 
 
     const navigate = useNavigate();
@@ -89,7 +89,9 @@ const AdmOrderList = () => {
                         { value: 'PAID', label: 'Pago' },
                         { value: 'SHIPPED', label: 'Enviado' },
                         { value: 'DELIVERED', label: 'Entregue' },
-                        { value: 'CANCELED', label: 'Cancelado' }
+                        { value: 'CANCELED', label: 'Cancelado' },
+                        { value: 'EXPIRED', label: 'Expirado' }
+
                     ]}
                     value={statusFilter}
                     onChange={handleStatusChange}

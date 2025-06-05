@@ -32,7 +32,6 @@ const ProductList = () => {
 
         axios.get(`${API_URL}${ROUTES.PRODUCT_LIST_STOCK}`,
             {
-                headers: {'Authorization': `Bearer ${userToken}`},
                 params,
             })
             .then(response => {
@@ -87,9 +86,8 @@ const ProductList = () => {
             </Group>
             <Grid gutter="md" justify="center">
                 {productData.map((product, index) => {
-                    // const {image, product_name, productCategory, product_description, product_price} = product;
 
-                    const {id, product_name, productCategory, product_description, product_price, currency} = product;
+                    const {id, product_name, productCategory, product_description, product_price, currency, stock} = product;
 
                     return (
                         <Grid.Col key={index} span={4} sm={6} md={4}>
@@ -126,6 +124,11 @@ const ProductList = () => {
                                     </Group>
                                     <Text fz="sm" mt="xs">
                                         {product_description}
+                                    </Text>
+
+                                    <Text fz="sm" mt="xs">
+                                        Estoque:
+                                        {stock}
                                     </Text>
                                 </Card.Section>
 

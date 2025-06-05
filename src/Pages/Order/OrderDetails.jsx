@@ -185,7 +185,7 @@ const OrderDetails = () => {
                     </Badge>
                 </Group>
                 <Divider my="sm"/>
-                {orderDetails?.status === 'CANCELED' && (
+                { (orderDetails?.status === 'CANCELED' || orderDetails?.status === 'EXPIRED') && (
                     <Group>
                         <Divider my="sm"/>
 

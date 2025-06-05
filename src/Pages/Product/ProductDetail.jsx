@@ -103,6 +103,8 @@ const ProductDetail = () => {
                             value={quantity}
                             onChange={setQuantity}
                         />
+
+
                         <Button
                             onClick={() => addToCart(productData?.id, quantity,
                                 productData?.product_name,
@@ -111,9 +113,11 @@ const ProductDetail = () => {
                             color="yellow"
                             size="lg"
                             radius="lg"
+                            disabled = {productData?.stock === 0}
                         >
-                            Comprar
+                            {productData?.stock !== 0 ?  'Comprar' : 'ESGOTADO'}
                         </Button>
+
                     </Grid.Col>
                 </Grid>
                 <Button style={{background: theme.colors.yellow[9]}} onClick={() => navigate('/profile')} type="button"
