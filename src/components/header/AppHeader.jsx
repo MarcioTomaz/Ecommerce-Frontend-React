@@ -64,8 +64,13 @@ function AppHeader() {
                 <a
                     key={id || label}
                     className={classes.link}
-                    onClick={(e) => { e.preventDefault(); onClick(); }}
-                    style={{cursor: 'pointer'}}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        startTransition(() => {
+                            onClick();
+                        });
+                    }}
+                    style={{ cursor: 'pointer' }}
                 >
                     {label}
                 </a>

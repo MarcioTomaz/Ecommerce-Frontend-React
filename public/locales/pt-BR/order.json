@@ -1,5 +1,6 @@
 {
   "filterByStatus": "Filtrar por status",
+  "selectStatus": "Selecione o status",
   "orderId": "Id do pedido",
   "total": "Total",
   "details": "Detalhes",

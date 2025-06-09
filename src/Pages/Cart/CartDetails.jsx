@@ -83,6 +83,8 @@ const CartDetails = () => {
             navigate(ROUTES.CHECKOUT)
 
         } catch (e) {
+            console.log(e)
+            alert("Erro: " + e.response.data.message);
             console.log("Erro carrinho:" + e)
         }
 

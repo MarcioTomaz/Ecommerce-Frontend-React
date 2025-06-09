@@ -81,8 +81,8 @@ const OrderClientList = () => {
             {/* Filtro de status */}
             <Group mb="md" spacing="sm">
                 <Select
-                    label="Filtrar por status"
-                    placeholder="Selecione o status"
+                    label={t('order:filterByStatus')}
+                    placeholder={t('order:selectStatus')}
                     data={[
                         { value: 'PENDING', label: t('order:PENDING') },
                         { value: 'PROCESSING', label: t('order:PROCESSING') },
