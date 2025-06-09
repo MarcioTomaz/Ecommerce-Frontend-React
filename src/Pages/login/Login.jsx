@@ -5,14 +5,15 @@ import {useForm} from "@mantine/form";
 import {useClientLogin} from "../../hooks/client/useClientLogin.jsx";
 import classes from './login.module.css';
 import {AuthContext} from "../../GlobalConfig/AuthContext.jsx";
-import {ROUTES} from "../../routes/URLS.jsx";
+import {useTranslation} from "react-i18next";
 
 const Login = () => {
     const {login, userToken} = useContext(AuthContext);
-    const {userRole, setUserRole} = useContext(AuthContext);
     const [errorMessage, setErrorMessage] = useState(null);
     const {mutate, isError, error} = useClientLogin();
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation(['common', 'login']);
+
 
     const form = useForm({
         mode: 'uncontrolled',
@@ -24,7 +25,6 @@ const Login = () => {
             password: (value) => (value.length > 3 ? null : 'Invalid password'),
         },
     });
-
 
     useEffect(() => {
 
@@ -49,13 +49,13 @@ const Login = () => {
     return (
         <Container size={420} my={40}>
             <Title ta="center" className={classes.title}>
-                Welcome back!
+                {t('login:welcome_back')}
             </Title>
 
             <Text c="dimmed" size="sm" ta="center" mt={5}>
-                Do not have an account yet?{' '}
+                {t('login:no_account_question')}
                 <Anchor size="sm" href='/register'>
-                    Create account
+                    {t('login:create_account')}
                 </Anchor>
             </Text>
 
@@ -63,27 +63,27 @@ const Login = () => {
                 <form onSubmit={form.onSubmit(handleSubmit)}>
                     <TextInput
                         withAsterisk
-                        label="Email"
-                        placeholder="your@email.com"
+                        label={t('common:email')}
+                        placeholder={t('common:your_email')}
                         key={form.key('email')}
                         {...form.getInputProps('email')}
                     />
 
                     <TextInput
                         withAsterisk
-                        label="Password"
-                        placeholder="password"
+                        label={t("login:password")}
+                        placeholder={t("login:password")}
                         type="password"
                         key={form.key('password')}
                         {...form.getInputProps('password')}
                     />
 
                     <Group justify="flex-end" mt="md">
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit">{t("common:submit")}</Button>
                     </Group>
 
                     <Anchor component="button" size="sm">
-                        Forgot password?
+                        {t("login:password_forgot")}
                     </Anchor>
                 </form>
             </Paper>

@@ -20,10 +20,12 @@ import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
 import {ROUTES} from "../../routes/URLS.jsx";
 import {useDisclosure} from "@mantine/hooks";
+import {useTranslation} from "react-i18next";
 
 const OrderDetails = () => {
     const [itemsOpen, setItemsOpen] = useState(false);
     const {login, userToken, userRole} = useContext(AuthContext);
+    const { t, i18n } = useTranslation(['common', 'registerPage','order', 'product']);
 
     // Handlers para as modais de aceite e recusa
     const [openedAccept, acceptHandlers] = useDisclosure(false);
@@ -113,47 +115,47 @@ const OrderDetails = () => {
     return (
         <Container size="md" style={{marginTop: 40}}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
-                <Title order={2}>Detalhes do Pedido</Title>
+                <Title order={2}>{t('order:orderDetails')}</Title>
                 <Divider my="sm"/>
 
                 {/* Informações do Cliente */}
-                <Title order={4}>Cliente</Title>
+                <Title order={4}>{t('common:client')}</Title>
                 <Text>
                     {orderDetails?.person.firstName} {orderDetails?.person.lastName} ({orderDetails?.person.gender})
                 </Text>
-                <Text>Data de Nascimento: {orderDetails?.person.birthDate}</Text>
-                <Text>Telefone: {orderDetails?.person.phoneNumber} ({orderDetails?.person.phoneType})</Text>
+                <Text>{t('registerPage:birthDate')}: {orderDetails?.person.birthDate}</Text>
+                <Text>{t('registerPage:phoneNumber')}: {orderDetails?.person.phoneNumber} ({orderDetails?.person.phoneType})</Text>
 
                 <Divider my="sm"/>
 
                 {/* Endereço de Cobrança */}
-                <Title order={4}>Endereço de Cobrança</Title>
+                <Title order={4}>{t('order:billingAddress')}</Title>
                 <Text>
                     {orderDetails?.billingAddress.street}, {orderDetails?.billingAddress.number} - {orderDetails?.billingAddress.district}
                 </Text>
                 <Text>
                     {orderDetails?.billingAddress.city} - {orderDetails?.billingAddress.state}, {orderDetails?.billingAddress.zipCode}
                 </Text>
-                <Text>País: {orderDetails?.billingAddress.country}</Text>
+                <Text>{t('order:country')}: {orderDetails?.billingAddress.country}</Text>
 
                 <Divider my="sm"/>
 
                 {/* Endereço de Entrega */}
-                <Title order={4}>Endereço de Entrega</Title>
+                <Title order={4}>{t('order:shippingAddress')}</Title>
                 <Text>
                     {orderDetails?.shippingAddress.street}, {orderDetails?.shippingAddress.number} - {orderDetails?.shippingAddress.district}
                 </Text>
                 <Text>
                     {orderDetails?.shippingAddress.city} - {orderDetails?.shippingAddress.state}, {orderDetails?.shippingAddress.zipCode}
                 </Text>
-                <Text>País: {orderDetails?.shippingAddress.country}</Text>
+                <Text>{t('order:country')}: {orderDetails?.shippingAddress.country}</Text>
 
                 <Divider my="sm"/>
 
                 {/* Itens do Pedido */}
-                <Title order={4}>Itens do Pedido</Title>
+                <Title order={4}>{t('order:orderItems')}</Title>
                 <Button onClick={() => setItemsOpen((prev) => !prev)}>
-                    {itemsOpen ? 'Ocultar Itens' : 'Mostrar Itens'}
+                    {itemsOpen ? t('order:hideItems') : t('order:showItems')}
                 </Button>
                 <Collapse in={itemsOpen}>
                     {orderDetails?.orderItemsDTO.map((item, index) => (
@@ -170,18 +172,18 @@ const OrderDetails = () => {
                 <Divider my="sm"/>
 
                 {/* Pagamento */}
-                <Title order={4}>Pagamento</Title>
+                <Title order={4}>{t('order:payment')}</Title>
                 {orderDetails?.status === 'WAITING_FOR_PAYMENT'
                     ? <Button onClick={() => navigate(`/order/${id}/payment`)} type="button">
-                        Ir para pagamento
+                        {t('order:proceedPayment')}
                     </Button>
                     : ''
                 }
                 <Text>Total: R$ {orderDetails?.cart.toFixed(2)}</Text>
                 <Group>
-                    <Text>Método: {orderDetails?.paymentMethods[0]?.type}</Text>
+                    <Text>{t('order:method')}:  {t(`order:${orderDetails?.paymentMethods[0]?.type}`) }</Text>
                     <Badge color={orderDetails?.status === 'PAID' ? 'green' : 'red'}>
-                        {orderDetails?.status}
+                        {t(`order:${orderDetails?.status}`) }
                     </Badge>
                 </Group>
                 <Divider my="sm"/>

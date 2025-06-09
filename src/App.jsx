@@ -7,6 +7,7 @@ import { createTheme, MantineProvider } from '@mantine/core'; // Remova ColorSch
 import RouteService from './routes/routeService.jsx';
 import Footer from './components/footer/footer.jsx';
 import { AuthProvider } from './GlobalConfig/AuthContext.jsx';
+import './GlobalConfig/i18n.js';
 
 const myThemeBase = {
     breakpoints: {

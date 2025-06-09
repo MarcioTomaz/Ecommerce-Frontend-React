@@ -1,0 +1,30 @@
+{
+  "filterByStatus": "Filter by status",
+  "orderId": "Order Id",
+  "total": "Total",
+  "details": "Details",
+  "status": "Status",
+  "orderDetails": "Order Details",
+  "billingAddress": "Billing Address",
+  "shippingAddress": "Shipping Address",
+  "orderItems": "Order Items",
+  "showItems": "Show items",
+  "hideItems": "Hide items",
+  "payment": "Payment",
+  "country": "Country",
+  "proceedPayment": "Proceed to Payment",
+  "method": "Method",
+
+  "CREDIT_CARD": "Credit Card",
+  "PIX": "Brazilian Pix",
+
+  "PENDING": "Pending",
+  "PROCESSING": "Processing",
+  "WAITING_FOR_PAYMENT": "Waiting for Payment",
+  "PAID": "Paid",
+  "SHIPPED": "Shipped",
+  "DELIVERED": "Delivered",
+  "CANCELED": "Canceled",
+  "EXPIRED": "Expired"
+
+}

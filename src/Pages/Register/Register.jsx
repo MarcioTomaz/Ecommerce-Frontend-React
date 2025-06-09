@@ -6,9 +6,11 @@ import { DateInput } from "@mantine/dates";
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "@mantine/form";
 import { ROUTES } from "../../routes/URLS.jsx";
+import {useTranslation} from "react-i18next";
 
 const RegisterPage = () => {
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation(['common', 'registerPage']);
 
     const form = useForm({
         mode: "uncontrolled",
@@ -60,38 +62,38 @@ const RegisterPage = () => {
                         style={{ maxWidth: '600px', margin: 'auto' }} // Define uma largura máxima para o formulário
                     >
                         <Title order={2} align="center" mb="lg">
-                            Register
+                            {t('registerPage:register')}
                         </Title>
 
                         <form onSubmit={form.onSubmit(handleSubmit)}>
                             <TextInput
                                 withAsterisk
-                                label="Email"
-                                placeholder="your@email.com"
+                                label={t('common:email')}
+                                placeholder={t('common:your_email')}
                                 {...form.getInputProps('email')}
                                 mb="md"
                             />
                             <TextInput
                                 withAsterisk
-                                label="Password"
-                                type="password"
+                                label={t('common:email')}
+                                type="email"
                                 {...form.getInputProps('password')}
                                 mb="md"
                             />
                             <TextInput
                                 withAsterisk
-                                label="First Name"
+                                label={t('registerPage:firstName')}
                                 {...form.getInputProps('personDTO.firstName')}
                                 mb="md"
                             />
                             <TextInput
                                 withAsterisk
-                                label="Last Name"
+                                label={t('registerPage:lastName')}
                                 {...form.getInputProps('personDTO.lastName')}
                                 mb="md"
                             />
                             <DateInput
-                                label="Birth Date"
+                                label={t('registerPage:birthDate')}
                                 withAsterisk
                                 {...form.getInputProps('personDTO.birthDate')}
                                 mb="md"
@@ -100,13 +102,13 @@ const RegisterPage = () => {
                                 withAsterisk
                                 component={IMaskInput}
                                 mask="+55 00 000000000"
-                                placeholder="Your phone number"
-                                label="Phone Number"
+                                placeholder={t('registerPage:yourPhone')}
+                                label={t('registerPage:phoneNumber')}
                                 {...form.getInputProps('personDTO.phoneNumber')}
                                 mb="md"
                             />
                             <Group position="center" mt="md">
-                                <Button fullWidth size="md" type="submit">Submit</Button>
+                                <Button fullWidth size="md" type="submit">{t('common:submit')}</Button>
                             </Group>
                         </form>
                     </Paper>

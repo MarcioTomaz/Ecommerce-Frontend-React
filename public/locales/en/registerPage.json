@@ -1,0 +1,8 @@
+{
+  "register": "Register",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "birthDate": "Birth Date",
+  "phoneNumber": "Phone Number",
+  "yourPhone": "Your Phone Number"
+}

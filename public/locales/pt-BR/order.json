@@ -1,0 +1,29 @@
+{
+  "filterByStatus": "Filtrar por status",
+  "orderId": "Id do pedido",
+  "total": "Total",
+  "details": "Detalhes",
+  "status": "Status",
+  "orderDetails": "Detalhes do Pedido",
+  "billingAddress": "Endereço de Cobrança",
+  "shippingAddress": "Endereço de Entrega",
+  "orderItems": "Itens do pedido",
+  "showItems": "Mostrar itens",
+  "hideItems": "Ocultar itens",
+  "payment": "Pagamento",
+  "country": "País",
+  "proceedPayment": "Ir para pagamento",
+  "method": "Método",
+
+  "CREDIT_CARD": "Cartão de crédito",
+  "PIX": "PIX",
+
+  "PENDING": "Pendente",
+  "PROCESSING": "Em Processamento",
+  "WAITING_FOR_PAYMENT": "Aguardando Pagamento",
+  "PAID": "Pago",
+  "SHIPPED": "Enviado",
+  "DELIVERED": "Entregue",
+  "CANCELED": "Cancelado",
+  "EXPIRED": "Expirado"
+}

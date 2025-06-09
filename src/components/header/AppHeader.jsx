@@ -1,58 +1,101 @@
-// components/header/AppHeader.jsx (Este arquivo NÃO MUDA)
-import React, { useContext, useEffect, useState } from 'react';
-import { Group, Autocomplete, rem, Anchor, Text, ActionIcon, useMantineColorScheme } from '@mantine/core'; // useMantineColorScheme é importado e usado aqui
-import { IconSearch, IconSun, IconMoon } from '@tabler/icons-react';
+import React, {startTransition, useContext, useEffect, useState} from 'react';
+import {
+    Group,
+    ActionIcon,
+    Select,
+    rem,
+    useMantineColorScheme
+} from '@mantine/core';
+import { IconSun, IconMoon } from '@tabler/icons-react';
 import classes from './HeaderSearch.module.css';
-import { MantineLogo } from "@mantinex/mantine-logo";
-import { ROUTES } from "../../routes/URLS.jsx";
-import { AuthContext } from "../../GlobalConfig/AuthContext.jsx";
-import NotificationButton from "./NotificationButton.jsx";
-
-const initialLinks = [
-    { id: 'home', link: '/home', label: 'Home' },
-    { id: 'products', link: ROUTES.PRODUCT_LIST, label: 'Produtos' },
-    { id: 'about', link: '/learn', label: 'Sobre' },
-    { id: 'cart', link: '/cart', label: 'Carrinho' },
-    { link: '/login', label: 'Login' },
-];
+import { MantineLogo } from '@mantinex/mantine-logo';
+import { ROUTES } from '../../routes/URLS.jsx';
+import { AuthContext } from '../../GlobalConfig/AuthContext.jsx';
+import NotificationButton from './NotificationButton.jsx';
+import { useTranslation } from 'react-i18next';
+import { Link, useNavigate } from 'react-router-dom'; //
 
 function AppHeader() {
     const { userToken, logout } = useContext(AuthContext);
-    const [links, setLinks] = useState(initialLinks);
     const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+    const { t, i18n, ready } = useTranslation('header');
+    const navigate = useNavigate(); //
 
-    useEffect(() => {
-        if (userToken) {
-            setLinks(prevLinks => [
-                ...prevLinks.filter(link => link.label !== 'Login'),
-                { link: '/profile', label: 'Perfil' },
-                { link: '#', label: 'Logout', onClick: handleLogout }
-            ]);
-        } else {
-            setLinks(initialLinks);
-        }
-    }, [userToken]);
+    const [links, setLinks] = useState([]);
+
+    // Função para obter os links iniciais (para usuários não logados)
+    const getInitialLinks = () => [
+        { id: 'home', to: '/home', label: t('home') },
+        { id: 'products', to: ROUTES.PRODUCT_LIST, label: t('products') },
+        { id: 'about', to: '/learn', label: t('about') },
+        { id: 'cart', to: ROUTES.CART_DETAILS, label: t('cart') },
+        { id: 'login', to: ROUTES.LOGIN, label: t('login') },
+    ];
 
     function handleLogout() {
-        logout();
-        setLinks(initialLinks);
+        startTransition( () =>{
+            logout();
+            navigate(ROUTES.LOGIN);
+        });
     }
 
-    const items = links.map(({ link, label, onClick }) => (
-        <Anchor
-            key={label}
-            href={link}
-            className={classes.link}
-            onClick={onClick ? (e) => { e.preventDefault(); onClick(); } : undefined}>
-            {label}
-        </Anchor>
-    ));
+    useEffect(() => {
+        if (!ready) return; // Espera o namespace "header" ser carregado
+
+        if (userToken) {
+            setLinks([
+                { id: 'home', to: '/home', label: t('home') },
+                { id: 'products', to: ROUTES.PRODUCT_LIST, label: t('products') },
+                { id: 'about', to: '/learn', label: t('about') },
+                { id: 'cart', to: ROUTES.CART_DETAILS, label: t('cart') },
+                { id: 'profile', to: ROUTES.PROFILE, label: t('profile') },
+
+                { id: 'logout', label: t('logout'), onClick: handleLogout },
+            ]);
+        } else {
+            setLinks(getInitialLinks());
+        }
+    }, [userToken, t, ready, navigate]);
+
+    const items = links.map(({ id, to, label, onClick }) => {
+        if (onClick) {
+
+            return (
+                <a
+                    key={id || label}
+                    className={classes.link}
+                    onClick={(e) => { e.preventDefault(); onClick(); }}
+                    style={{cursor: 'pointer'}}
+                >
+                    {label}
+                </a>
+            );
+        }
+        return (
+            <Link
+                key={id || label}
+                to={to}
+                className={classes.link}
+            >
+                {label}
+            </Link>
+        );
+    });
+
+    const handleLanguageChange = (value) => {
+        i18n.changeLanguage(value);
+    };
+
+    // Evita renderizar o cabeçalho antes das traduções estarem prontas
+    if (!ready) return null;
 
     return (
         <header className={classes.header}>
             <div className={classes.inner}>
                 <Group>
-                    <MantineLogo size={28} />
+                    <Link to={ROUTES.HOME}>
+                        <MantineLogo size={28} />
+                    </Link>
                 </Group>
 
                 <Group ml={50} gap={5} className={classes.links} visibleFrom="sm">
@@ -60,7 +103,6 @@ function AppHeader() {
 
                     {userToken && <NotificationButton />}
 
-                    {/* Botão para alternar o modo escuro */}
                     <ActionIcon
                         onClick={() => toggleColorScheme()}
                         variant="default"
@@ -75,13 +117,19 @@ function AppHeader() {
                     </ActionIcon>
                 </Group>
 
-                <Autocomplete
-                    className={classes.search}
-                    placeholder="Search"
-                    leftSection={<IconSearch style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
-                    visibleFrom="xs"
-                />
-
+                <Group position="right">
+                    <Select
+                        data={[
+                            { value: 'pt-BR', label: 'Português (Brasil)' },
+                            { value: 'en', label: 'English' },
+                        ]}
+                        placeholder={t('select_language')}
+                        value={i18n.language}
+                        onChange={handleLanguageChange}
+                        allowDeselect={false}
+                        style={{ width: 180 }}
+                    />
+                </Group>
             </div>
         </header>
     );

@@ -1,0 +1,8 @@
+{
+  "register": "Cadastrar",
+  "firstName": "Nome",
+  "lastName": "Sobrenome",
+  "birthDate": "Data de aniversário",
+  "phoneNumber": "Telefone",
+  "yourPhone": "Seu Telefone"
+}

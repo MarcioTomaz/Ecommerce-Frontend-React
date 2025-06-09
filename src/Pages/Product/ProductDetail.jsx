@@ -1,5 +1,5 @@
 import {Container, Grid, Paper, Title, Text, Textarea, Button, NumberInput, useMantineTheme} from "@mantine/core";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState, startTransition} from "react"; // <--- Importe startTransition
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../../hooks/api.jsx";
@@ -7,8 +7,6 @@ import { ROUTES } from "../../routes/URLS.jsx";
 import {AuthContext} from "../../GlobalConfig/AuthContext.jsx";
 
 const ProductDetail = () => {
-
-    const { login, userToken } = useContext(AuthContext);
 
     const [productData, setProductData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -51,7 +49,16 @@ const ProductDetail = () => {
 
         console.log("Carrinho atualizado:", cartData);
 
-        navigate("/cart");
+        startTransition(() => {
+            navigate(ROUTES.CART_DETAILS);
+        });
+    };
+
+    const handleGoBackToList = () => {
+
+        startTransition(() => {
+            navigate(ROUTES.PRODUCT_LIST);
+        });
     };
 
     return (
@@ -120,7 +127,7 @@ const ProductDetail = () => {
 
                     </Grid.Col>
                 </Grid>
-                <Button style={{background: theme.colors.yellow[9]}} onClick={() => navigate('/profile')} type="button"
+                <Button style={{background: theme.colors.yellow[9]}} onClick={handleGoBackToList} type="button"
                         mt="md">Voltar</Button>
             </Paper>
         </Container>
