@@ -15,10 +15,8 @@
   "country": "País",
   "proceedPayment": "Ir para pagamento",
   "method": "Método",
-
   "CREDIT_CARD": "Cartão de crédito",
   "PIX": "PIX",
-
   "PENDING": "Pendente",
   "PROCESSING": "Em Processamento",
   "WAITING_FOR_PAYMENT": "Aguardando Pagamento",
@@ -26,5 +24,18 @@
   "SHIPPED": "Enviado",
   "DELIVERED": "Entregue",
   "CANCELED": "Cancelado",
-  "EXPIRED": "Expirado"
+  "EXPIRED": "Expirado",
+  "orderCancelSeeReason": "Pedido cancelado veja o motivo abaixo!",
+  "acceptOrderQuestion": "Deseja aceitar o pedido e enviá-lo para entrega?",
+  "analyzingOrder": "Analisando Pedido",
+  "rejectOrderQuestion": "Deseja recusar o pedido?",
+  "enterReason": "Adicionar Motivo",
+  "reportRejectReason": "Informe o motivo da recusa",
+  "acceptAndShipOrderQuestion": "Aceitar pedido e enviar?",
+  "acceptOrder": "Aceitar Pedido",
+  "rejectOrder": "Recusar Pedido",
+  "rejectReason": "Motivo da recusa",
+  "proceedToPayment": "Prosseguir para o Pagamento"
+
+
 }

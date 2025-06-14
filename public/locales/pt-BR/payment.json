@@ -1,0 +1,16 @@
+{
+  "payment": "Pagamento",
+  "orderSummary": "Resumo do Pedido",
+  "totalToPay": "Total a pagar",
+  "choosePayment": "Escolha o tipo de Pagamento",
+  "singlePayment": "Pagamento único",
+  "moreThanOneMethod": "Mais de um método",
+  "SelectPaymentMethods":"Selecione os métodos de pagamento",
+  "creditCard": "Cartão de Crédito",
+  "pix": "Pix",
+  "selectACard": "Selecione um cartão",
+  "pixPayment": "Pagamento via PIX",
+  "confirmPayment": "Confirmar pagamento",
+  "creditCardPayment": "Pagamento via Cartão de Crédito",
+  "selectCreditCard": "Selecione um cartão"
+}

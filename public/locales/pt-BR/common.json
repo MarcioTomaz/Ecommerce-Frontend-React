@@ -5,5 +5,19 @@
   "name": "Nome",
   "gender": "Sexo",
   "back": "Voltar",
-  "client": "Cliente"
+  "client": "Cliente",
+  "clearFilter": "Limpar filtro",
+  "details": "Detalhes",
+  "infos": "Informações",
+  "id": "Id",
+  "actions": "Ações",
+  "edit": "Editar",
+  "cancel": "Cancelar",
+  "delete": "Excluir",
+  "accept": "Aceitar",
+  "send": "Enviar",
+  "remove": "Remover"
+
+
+
 }

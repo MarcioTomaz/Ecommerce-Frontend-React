@@ -5,6 +5,7 @@ import axios from "axios";
 import { API_URL } from "../../hooks/api.jsx";
 import { ROUTES } from "../../routes/URLS.jsx";
 import {AuthContext} from "../../GlobalConfig/AuthContext.jsx";
+import {useTranslation} from "react-i18next";
 
 const ProductDetail = () => {
 
@@ -15,20 +16,24 @@ const ProductDetail = () => {
     const { id } = useParams();
     const [quantity, setQuantity] = useState(1);
     const theme = useMantineTheme();
-
+    const { t, i18n } = useTranslation(['common', 'product']);
 
     useEffect(() => {
-        axios
-            .get(`${API_URL}${ROUTES.PRODUCT_READ_ID}/${id}`)
-            .then((response) => {
-                setProductData(response.data);
-                setIsLoading(false);
-            })
-            .catch((error) => {
-                setError(error);
-                setIsLoading(false);
-            });
-    }, [id]);
+        fetchProductDetails();
+    },[])
+
+    const fetchProductDetails = async () => {
+        try {
+            const response = await axios.get(`${API_URL}${ROUTES.PRODUCT_READ_ID}/${id}`);
+            setProductData(response.data);
+            setIsLoading(false);
+
+
+        }catch (error) {
+            setError(error);
+        }
+    }
+
 
     const addToCart = (idItem, quantityItem, productName, productPrice) => {
         const cartStorage = localStorage.getItem("cartItem");
@@ -67,7 +72,7 @@ const ProductDetail = () => {
                 <Grid>
                     <Grid.Col span={12}>
                         <Title order={2}>{productData?.product_name}</Title>
-                        <Text>Detalhes do Produto</Text>
+                        <Text>{t('product:productDetails')}</Text>
                     </Grid.Col>
 
                     <Grid.Col
@@ -94,17 +99,17 @@ const ProductDetail = () => {
                             height: "100%",
                         }}
                     >
-                        <Text>Informações</Text>
-                        <Text>Id Produto: {productData?.id}</Text>
-                        <Text>Nome: {productData?.product_name}</Text>
+                        <Text>{t('common:infos')}</Text>
+                        <Text>{t('product:productId')}: {productData?.id}</Text>
+                        <Text>{t('common:name')}: {productData?.product_name}</Text>
                         <Text>
-                            Preço: {productData?.currency?.symbol} {productData?.product_price}
+                            {t('product:Price')}: {productData?.currency?.symbol} {productData?.product_price}
                         </Text>
-                        <Text>Estoque: {productData?.stock}</Text>
-                        <Text>Categoria: {productData?.productCategory}</Text>
+                        <Text>{t('product:stock')}: {productData?.stock}</Text>
+                        <Text>{t('product:Category')}: {t(`product:${productData?.productCategory}`)}</Text>
                         <Textarea value={productData?.product_description} readOnly />
                         <NumberInput
-                            label="Quantidade"
+                            label={t('product:Quantity')}
                             min={1}
                             max={productData?.stock || 1}
                             value={quantity}
@@ -122,13 +127,13 @@ const ProductDetail = () => {
                             radius="lg"
                             disabled = {productData?.stock === 0}
                         >
-                            {productData?.stock !== 0 ?  'Comprar' : 'ESGOTADO'}
+                            {productData?.stock !== 0 ?  t('product:purchase') : t('product:outOfStock')}
                         </Button>
 
                     </Grid.Col>
                 </Grid>
                 <Button style={{background: theme.colors.yellow[9]}} onClick={handleGoBackToList} type="button"
-                        mt="md">Voltar</Button>
+                        mt="md">{t('common:back')}</Button>
             </Paper>
         </Container>
     );

@@ -4,7 +4,7 @@
   "orderId": "Order Id",
   "total": "Total",
   "details": "Details",
-  "status": "Status",
+  "status": "Stats",
   "orderDetails": "Order Details",
   "billingAddress": "Billing Address",
   "shippingAddress": "Shipping Address",
@@ -26,6 +26,18 @@
   "SHIPPED": "Shipped",
   "DELIVERED": "Delivered",
   "CANCELED": "Canceled",
-  "EXPIRED": "Expired"
+  "EXPIRED": "Expired",
+  "orderCancelSeeReason": "Your purchase was canceled. See the reason below.",
+  "acceptOrderQuestion": "Do you want to accept the order and send it for delivery?",
+  "analyzingOrder": "Analyzing order",
+  "rejectOrderQuestion": "Would you like to reject this order?",
+  "enterReason": "Enter a reason",
+  "reportRejectReason": "Report rejection reason",
+  "acceptAndShipOrderQuestion": "Accept the order and ship it?",
+  "acceptOrder": "Accept Order",
+  "rejectOrder": "Reject Order",
+  "rejectReason": "Reject reason",
+  "proceedToPayment": "Proceed to Payment"
+
 
 }

@@ -41,19 +41,26 @@ const OrderDetails = () => {
     const theme = useMantineTheme();
 
     useEffect(() => {
-        console.log("UserRole: ", userRole);
-
-        axios.get(`${API_URL}/order/details/${id}`, {
-            headers: {'Authorization': `Bearer ${userToken}`}
-        }).then(res => {
-            setOrderDetails(res.data);
-            console.log(res.data);
-        });
+        fetchOrderDetails();
     }, [id, userToken, userRole]);
 
-    const handleOrderAcceptance = () => {
+    const fetchOrderDetails = async () => {
 
-        // alert("Pedido aceito");
+        try {
+            console.log("UserRole: ", userRole);
+
+         const response = await axios.get(`${API_URL}/order/details/${id}`, {
+                headers: {'Authorization': `Bearer ${userToken}`}});
+
+            setOrderDetails(response.data);
+            console.log(response.data);
+        }catch(error) {
+            console.log(error);
+        }
+
+    }
+
+    const handleOrderAcceptance = () => {
 
         try {
 
@@ -160,11 +167,11 @@ const OrderDetails = () => {
                 <Collapse in={itemsOpen}>
                     {orderDetails?.orderItemsDTO.map((item, index) => (
                         <Card key={index} shadow="xs" padding="sm" mt="sm">
-                            <Text>Produto: {item.product.product_name}</Text>
-                            <Text>Descrição: {item.product.product_description}</Text>
-                            <Text>Categoria: {item.product.productCategory}</Text>
-                            <Text>Preço: R$ {item.product.product_price.toFixed(2)}</Text>
-                            <Text>Quantidade: {item.quantity}</Text>
+                            <Text>{t('common:name')}: {item.product.product_name}</Text>
+                            <Text>{t('product:description')}: {item.product.product_description}</Text>
+                            <Text>{t('product:Category')}: {item.product.productCategory}</Text>
+                            <Text>{t('product:Price')}: R$ {item.product.product_price.toFixed(2)}</Text>
+                            <Text>{t('product:Quantity')}: {item.quantity}</Text>
                         </Card>
                     ))}
                 </Collapse>
@@ -179,7 +186,7 @@ const OrderDetails = () => {
                     </Button>
                     : ''
                 }
-                <Text>Total: R$ {orderDetails?.cart.toFixed(2)}</Text>
+                <Text>{t('order:total')}: R$ {orderDetails?.cart.toFixed(2)}</Text>
                 <Group>
                     <Text>{t('order:method')}:  {t(`order:${orderDetails?.paymentMethods[0]?.type}`) }</Text>
                     <Badge color={orderDetails?.status === 'PAID' ? 'green' : 'red'}>
@@ -194,7 +201,7 @@ const OrderDetails = () => {
                         <Grid>
                             <Grid.Col span={12}>
                                 <Title order={3} style={{color: theme.colors.red[5]}}
-                                >Pedido cancelado veja o motivo abaixo!</Title>
+                                >{t('order:orderCancelSeeReason')}</Title>
                             </Grid.Col>
                             <Grid.Col span={12}>
                                 {orderDetails.comments.map((c, index)=> <Text key={index}>{c.comment}</Text>)}
@@ -215,21 +222,22 @@ const OrderDetails = () => {
                             onClose={acceptHandlers.close}
                             title="Analisando Pedido"
                         >
-                            Deseja aceitar o pedido e enviá-lo para entrega?
+                            {t('order:acceptOrderQuestion')}
                             <Group mt="md" spacing="md">
                                 <Button
                                     variant="filled"
                                     style={{background: theme.colors.green[5]}}
                                     onClick={handleOrderAcceptance}
                                 >
-                                    Aceitar
+                                    {t('common:accept')}
                                 </Button>
                                 <Button
                                     variant="filled"
                                     style={{background: theme.colors.gray[5]}}
                                     onClick={acceptHandlers.close}
                                 >
-                                    Cancelar
+                                    {t('common:cancel')}
+
                                 </Button>
                             </Group>
                         </Modal>
@@ -241,33 +249,33 @@ const OrderDetails = () => {
                                 setIsRejectedReasonVisible(false);
                                 rejectHandlers.close();
                             }}
-                            title="Analisando Pedido"
+                            title={t('order:analyzingOrder')}
                         >
                             {!isRejectedReasonVisible ? (
                                 <>
-                                    Deseja recusar o pedido?
+                                    {t('order:rejectOrderQuestion')}
                                     <Group mt="md" spacing="md">
                                         <Button
                                             variant="filled"
                                             style={{background: theme.colors.red[5]}}
                                             onClick={handleRejectClick}
                                         >
-                                            Adicionar Motivo
+                                            {t('order:enterReason')}
                                         </Button>
                                         <Button
                                             variant="filled"
                                             style={{background: theme.colors.gray[5]}}
                                             onClick={rejectHandlers.close}
                                         >
-                                            Cancelar
+                                            {t('common:cancel')}
                                         </Button>
                                     </Group>
                                 </>
                             ) : (
                                 <>
-                                    <Text>Informe o motivo da recusa:</Text>
+                                    <Text>{t('order:reportRejectReason')}:</Text>
                                     <TextInput
-                                        placeholder="Motivo da recusa"
+                                        placeholder={t('order:rejectReason')}
                                         value={rejectionReason}
                                         onChange={(e) => setRejectionReason(e.target.value)}
                                     />
@@ -277,7 +285,7 @@ const OrderDetails = () => {
                                             style={{background: theme.colors.red[5]}}
                                             onClick={handleSubmitRejection}
                                         >
-                                            Enviar
+                                            {t('common:send')}
                                         </Button>
                                         <Button
                                             variant="filled"
@@ -288,7 +296,7 @@ const OrderDetails = () => {
                                                 setRejectionReason("");
                                             }}
                                         >
-                                            Cancelar
+                                            {t('common:cancel')}
                                         </Button>
                                     </Group>
                                 </>
@@ -298,7 +306,7 @@ const OrderDetails = () => {
                         {/* Botões de Ação */}
                         {orderDetails?.status === 'PAID' && (
                             <Grid.Col span={12}>
-                                <Title order={4}>Aceitar pedido e enviar?</Title>
+                                <Title order={4}>{t('order:acceptAndShipOrderQuestion')}</Title>
                                 <Grid mt="md">
                                     <Grid.Col span={6}>
                                         <Button
@@ -307,7 +315,7 @@ const OrderDetails = () => {
                                             style={{background: theme.colors.green[5]}}
                                             onClick={acceptHandlers.open}
                                         >
-                                            Aceitar Pedido
+                                            {t('order:acceptOrder')}
                                         </Button>
                                     </Grid.Col>
                                     <Grid.Col span={6}>
@@ -317,7 +325,7 @@ const OrderDetails = () => {
                                             style={{background: theme.colors.red[5]}}
                                             onClick={rejectHandlers.open}
                                         >
-                                            Recusar Pedido
+                                            {t('order:rejectOrder')}
                                         </Button>
                                     </Grid.Col>
                                 </Grid>
@@ -333,7 +341,7 @@ const OrderDetails = () => {
                 type="button"
                 mt="md"
             >
-                Voltar
+                {t('common:back')}
             </Button>
         </Container>
     );

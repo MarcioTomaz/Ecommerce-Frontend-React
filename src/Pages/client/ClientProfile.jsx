@@ -33,6 +33,7 @@ const ClientProfile = () => {
                 setError(error);
                 setIsLoading(false);
             });
+
     }, [userRole, userToken, navigate]);
 
     const changePage = (page) => {

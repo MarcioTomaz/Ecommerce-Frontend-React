@@ -6,5 +6,19 @@
   "name": "Name",
   "gender": "Gender",
   "back": "Back",
-  "client": "Client"
+  "actions": "Actions",
+  "client": "Client",
+  "clearFilter": "Clear Filter",
+  "details": "Details",
+  "infos": "Information",
+  "purchase ": "Purchase",
+  "id": "Id",
+  "edit": "Edit",
+  "delete": "Delete",
+  "cancel": "Cancel",
+  "accept": "Accept",
+  "send": "Send",
+  "remove": "Remove"
+
+
 }

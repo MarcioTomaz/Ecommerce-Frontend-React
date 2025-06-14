@@ -21,25 +21,26 @@ const OrderClientList = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [statusFilter, setStatusFilter] = useState(null);
 
+    const fetchOrders = async (pageNumber, status) => {
+        try {
+            const params = {
+                page: pageNumber -1,
+                size: pageSize,
+                ...(status ? { status} : {}),
+            };
 
-    const fetchOrders = (pageNumber, status) => {
-        const params = {
-            page: pageNumber - 1,
-            size: pageSize,
-            ...(status && { status: status }),
+            const response = await axios.get(`${API_URL}${ROUTES.ORDER_LIST}`,
+                {params, headers:{Authorization: `Bearer ${userToken}`},} );
+
+            const { content, totalPages } = response.data;
+            setOrders(content);
+            setTotalPages(totalPages);
+
+        }catch (error) {
+            console.error(error);
         }
 
-        axios.get(`${API_URL}${ROUTES.ORDER_LIST}`,
-            {headers: {'Authorization': `Bearer ${userToken}`},
-            params,
-            })
-            .then(response => {
-                const {content, totalPages: tp } = response.data;
-                setOrders(content);
-                setTotalPages(tp);
-            })
-            .catch((error) => {console.error(error);});
-    };
+    }
 
 
     const orderDetails= (orderId) =>{

@@ -4,17 +4,7 @@ import axios from "axios";
 import {API_URL} from "../../hooks/api.jsx";
 import {AuthContext} from "../../GlobalConfig/AuthContext.jsx";
 import {useNavigate} from "react-router-dom";
-import {ROUTES} from "../../routes/URLS.jsx";
-
-const mockAddresses = [
-    {id: "1", label: "Rua A, 123 - Cidade X"},
-    {id: "2", label: "Avenida B, 456 - Cidade Y"},
-];
-
-const mockCartItems = [
-    {id: "101", name: "Produto 1", quantity: 2, price: 50.0},
-    {id: "102", name: "Produto 2", quantity: 1, price: 30.0},
-];
+import {useTranslation} from "react-i18next";
 
 const Checkout = () => {
     const [shippingAddress, setShippingAddress] = useState(null);
@@ -23,6 +13,7 @@ const Checkout = () => {
     const [addressList, setAddressList] = useState([]);
     const [cartItems, setCartItems] = useState([]);
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation(['common', 'address', 'product', 'order']);
 
     const {login, userToken} = useContext(AuthContext);
 
@@ -77,7 +68,7 @@ const Checkout = () => {
             <Card shadow="sm" padding="lg" style={{width: "100%", maxWidth: 600}}>
                 <Grid gutter="md">
                     <Grid.Col span={12}>
-                        <Text weight={500}>Endereço de Entrega</Text>
+                        <Text weight={500}>{t('address:shippingAddress')}</Text>
                         <Select
                             data={addressList.map((a) => ({
                                 value: String(a.id),
@@ -85,13 +76,13 @@ const Checkout = () => {
                             }))}
                             value={shippingAddress}
                             onChange={setShippingAddress}
-                            placeholder="Selecione o endereço"
+                            placeholder={t('address:selectAddress')}
                         />
                     </Grid.Col>
                     <Grid.Col span={12}>
-                        <Text weight={500}>Endereço de Cobrança</Text>
+                        <Text weight={500}>{t('address:billingAddress')}</Text>
                         <Checkbox
-                            label="Usar o mesmo endereço de entrega"
+                            label={t('address:useSameShippingAddress')}
                             checked={sameBilling}
                             onChange={(event) => {
                                 setSameBilling(event.currentTarget.checked);
@@ -108,12 +99,12 @@ const Checkout = () => {
                                 }))}
                                 value={billingAddress}
                                 onChange={setBillingAddress}
-                                placeholder="Selecione o endereço"
+                                placeholder={t('address:selectAddress')}
                             />
                         )}
                     </Grid.Col>
                 </Grid>
-                <Text mt="lg" weight={500} align="center">Itens do Pedido</Text>
+                <Text mt="lg" weight={500} align="center">{t('order:orderItems')}</Text>
                 <Divider my="md"/>
 
                 {cartItems.map((item) => (
@@ -127,7 +118,7 @@ const Checkout = () => {
                             stepPaymentOrder()
                         }}
                 >
-                    Prosseguir para o Pagamento
+                    {t('order:proceedToPayment')}
                 </Button>
             </Card>
         </Container>

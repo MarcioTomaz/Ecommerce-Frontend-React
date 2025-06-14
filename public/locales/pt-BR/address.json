@@ -1,0 +1,20 @@
+{
+  "title": "Lista de Endereços",
+  "street": "Rua",
+  "residencyType": "Tipo de Residência",
+  "number": "Número",
+  "district": "Bairro",
+  "zipCode": "CEP",
+  "city": "Cidade",
+  "addressType": "Tipo de Endereço",
+  "actions": "Ações",
+  "confirmDeleteTitle": "Confirmar Exclusão",
+  "confirmDeleteMessage": "Você tem certeza de que deseja excluir este endereço? Esta ação não pode ser desfeita.",
+  "confirmDeleteButton": "Confirmar Exclusão",
+  "registerNewAddress": "Cadastrar novo endereço",
+  "shippingAddress": "Endereço de entrega",
+  "billingAddress": "Endereço de cobrança",
+  "selectAddress": "Selecione o endereço",
+  "useSameShippingAddress": "Usar o mesmo endereço de entrega"
+
+}

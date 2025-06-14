@@ -1,8 +1,17 @@
 {
-  "product": "Produto",
-  "description": "Descrição",
-  "Category": "Categoria",
-  "Price": "Preço",
-  "Quantity": "Quantidade"
-
+  "product": "Product",
+  "description": "Description",
+  "Category": "Category",
+  "Price": "Price",
+  "Quantity": "Quantity",
+  "filterByCategory": "Filter by category",
+  "selectCategory": "Select category filter",
+  "CATEGORY1": "Category 1",
+  "CATEGORY2": "Category 2",
+  "CATEGORY3": "Category 3",
+  "stock": "Stock",
+  "productDetails": "Product Details",
+  "productId": "Product ID",
+  "purchase": "Purchase",
+  "outOfStock": "Out of Stock"
 }

@@ -17,6 +17,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {AuthContext} from "../../GlobalConfig/AuthContext.jsx";
 import axios from "axios";
 import {API_URL} from "../../hooks/api.jsx";
+import {useTranslation} from "react-i18next";
 
 const PaymentStep = () => {
     const [paymentMethod, setPaymentMethod] = useState("single");
@@ -30,6 +31,8 @@ const PaymentStep = () => {
     const [paymentPix, setPaymentPix] = useState(10);
     const [paymentCard, setPaymentCard] = useState(10);
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation(['common', 'payment',]);
+
 
     const {id} = useParams();
     const {login, userToken} = useContext(AuthContext);
@@ -196,19 +199,19 @@ const PaymentStep = () => {
             <Card shadow="sm" padding="lg" style={{width: "100%", maxWidth: 600}}>
                 <Grid>
                     <Grid.Col span={12}>
-                        <Text size="xl" weight={700} align="center">Pagamento</Text>
+                        <Text size="xl" weight={700} align="center">{t('payment:payment')}</Text>
                     </Grid.Col>
 
                     <Grid.Col span={12}>
                         <Card withBorder padding="md">
-                            <Text weight={500}>Resumo do Pedido</Text>
-                            <Text size="sm">Total a pagar: R$ {totalOrders}</Text>
+                            <Text weight={500}>{t('payment:orderSummary')}</Text>
+                            <Text size="sm">{t('payment:totalToPay')}: R$ {totalOrders}</Text>
                         </Card>
                     </Grid.Col>
 
                     <Grid.Col span={12}>
                         <Select
-                            label="Escolha o tipo de pagamento"
+                            label={t('payment:choosePayment')}
                             value={paymentMethod}
                             onChange={(value) => {
                                 setPaymentMethod(value);
@@ -217,27 +220,27 @@ const PaymentStep = () => {
                                 setSelectedMethods([]);
                             }}
                             data={[
-                                {value: "single", label: "Pagamento único"},
-                                {value: "multiple", label: "Mais de um método"},
+                                {value: "single", label: t('payment:singlePayment')},
+                                {value: "multiple", label: t('payment:multiplePaymentMethods')},
                             ]}
                         />
                     </Grid.Col>
 
                     <Grid.Col span={12}>
                         <Checkbox.Group
-                            label="Selecione os métodos de pagamento"
+                            label={t('payment:selectPaymentMethods')}
                             value={selectedMethods}
                             onChange={handleMethodChange}
                         >
                             <Group mt="xs">
                                 <Checkbox
                                     value="credit_card"
-                                    label="Cartão de Crédito"
+                                    label={t('payment:creditCard')}
                                     disabled={paymentMethod === "single" && selectedMethods.length > 0 && selectedMethods[0] !== "credit_card"}
                                 />
                                 <Checkbox
                                     value="pix"
-                                    label="PIX"
+                                    label={t('payment:pix')}
                                     disabled={paymentMethod === "single" && selectedMethods.length > 0 && selectedMethods[0] !== "pix"}
                                 />
                             </Group>
@@ -247,7 +250,7 @@ const PaymentStep = () => {
                     {selectedMethods.includes("pix") && (
                         <Grid.Col span={12}>
                             <Card withBorder padding="md">
-                                <Text weight={500}>Pagamento via PIX</Text>
+                                <Text weight={500}>{t('payment:pixPayment')}</Text>
                                 <Image
                                     src="https://media.istockphoto.com/id/1095468748/pt/vetorial/qr-code-abstract-vector-modern-bar-code-sample-for-smartphone-scanning-isolated-on-white.jpg?s=612x612&w=0&k=20&c=Sr77lnSxfnkUBiPUpk44mHmCdGueNSG0vrvCGcRCol8="
                                     alt="QR Code PIX"
@@ -262,7 +265,7 @@ const PaymentStep = () => {
                                         padding="md"
                                         size="md"
                                         radius="xs"
-                                        placeholder="Total a pagar"
+                                        placeholder={t('payment:totalToPay')}
                                         onChange={handlePixChange}
                                         value={paymentPix}
                                         min={10}
@@ -276,14 +279,14 @@ const PaymentStep = () => {
                     {selectedMethods.includes("credit_card") && (
                         <Grid.Col span={12}>
                             <Card withBorder padding="md">
-                                <Text weight={500}>Pagamento via Cartão de Crédito</Text>
+                                <Text weight={500}>{t('payment:creditCardPayment')}</Text>
                                 <Radio.Group
                                     value={selectedCard}
                                     onChange={(value) => {
                                         cardPayment(value);
                                         // console.log("Selected Card:", value); // Verifique o valor
                                     }}
-                                    label="Selecione um cartão"
+                                    label={t('payment:selectCreditCard')}
                                 >
                                     <Group mt="xs">
                                         {cards.map((card) => (
@@ -302,7 +305,7 @@ const PaymentStep = () => {
                     {cardValuePayment && paymentMethod === "single" && (
                         <Grid.Col span={12}>
                             <Card withBorder padding="md">
-                                <Text weight={500}>Total a pagar</Text>
+                                <Text weight={500}>{t('payment:totalToPay')}</Text>
                                 <Text size="sm">R$ {totalOrders}</Text>
                             </Card>
                         </Grid.Col>
@@ -311,7 +314,7 @@ const PaymentStep = () => {
                     {cardValuePayment && paymentMethod === "multiple" && (
                         <Grid.Col span={12}>
                             <Card withBorder padding="md">
-                                <Text weight={500}>Total a pagar</Text>
+                                <Text weight={500}>{t('payment:totalToPay')}</Text>
                                 <NumberInput
                                     id="valueCard"
                                     value={paymentCard}
@@ -328,7 +331,7 @@ const PaymentStep = () => {
                             onClick={() => {
                                 handlePayment()
                             }}
-                            fullWidth>Confirmar Pagamento</Button>
+                            fullWidth>{t('payment:confirmPayment')}</Button>
                     </Grid.Col>
                 </Grid>
             </Card>

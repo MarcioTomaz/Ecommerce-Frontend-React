@@ -1,0 +1,21 @@
+{
+  "title": "Address List",
+  "street": "Street",
+  "residencyType": "Residency Type",
+  "number": "Number",
+  "district": "District",
+  "zipCode": "Zip Code",
+  "city": "City",
+  "addressType": "Address Type",
+  "actions": "Actions",
+  "confirmDeleteTitle": "Confirm Deletion",
+  "confirmDeleteMessage": "Are you sure you want to delete this address? This action cannot be undone.",
+  "confirmDeleteButton": "Confirm Deletion",
+  "registerNewAddress": "Register New Address",
+  "shippingAddress": "Shipping Address",
+  "billingAddress": "Billing Address",
+  "selectAddress": "Select address",
+  "useSameShippingAddress": "Use the same shipping address"
+
+
+}

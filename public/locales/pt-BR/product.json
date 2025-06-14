@@ -1,7 +1,17 @@
 {
-  "product": "Product",
-  "description": "Description",
-  "Category": "Category",
-  "Price": "Price",
-  "Quantity": "Quantity"
+  "product": "Produto",
+  "description": "Descrição",
+  "Category": "Categoria",
+  "Price": "Preço",
+  "Quantity": "Quantidade",
+  "filterByCategory": "Filtro por categoria",
+  "selectCategory": "Selecione a categoria",
+  "CATEGORY1": "Categoria 1",
+  "CATEGORY2": "Categoria 2",
+  "CATEGORY3": "Categoria 3",
+  "stock": "Estoque",
+  "productDetails": "Detalhes do Produto",
+  "productId": "Id do Produto",
+  "purchase": "Comprar",
+  "outOfStock": "Esgotado"
 }

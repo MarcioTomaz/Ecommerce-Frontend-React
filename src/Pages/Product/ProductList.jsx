@@ -7,11 +7,14 @@ import {API_URL} from "../../hooks/api.jsx";
 import {ROUTES} from "../../routes/URLS.jsx";
 import {useNavigate} from "react-router-dom";
 import {AuthContext} from "../../GlobalConfig/AuthContext.jsx";
+import {useTranslation} from "react-i18next";
 
 const ProductList = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const {login, userToken} = useContext(AuthContext);
+
+    const { t, i18n } = useTranslation(['common', 'product']);
 
     const [productData, setProductData] = useState([]);
     const [page, setPage] = useState(1);
@@ -23,25 +26,24 @@ const ProductList = () => {
 
     const navigate = useNavigate();
 
-    const fetchProducts = (pageNumber, productCategoryFilter) => {
-        const params = {
-            page: pageNumber - 1,
-            size: pageSize,
-            ...(productCategoryFilter && {productCategoryFilter: productCategoryFilter}),
-        }
+    const fetchProducts = async (pageNumber, productCategoryFilter) => {
+        try {
+            const params = {
+                page: pageNumber -1,
+                size: pageSize,
+                ...(productCategoryFilter ? {productCategoryFilter} : {}),
+            };
 
-        axios.get(`${API_URL}${ROUTES.PRODUCT_LIST_STOCK}`,
-            {
-                params,
-            })
-            .then(response => {
-                const {content, totalPages: tp} = response.data;
-                setProductData(content);
-                setTotalPages(tp);
-            })
-            .catch(error => {
-                console.error(error)
-            });
+            const response = await axios.get(`${API_URL}${ROUTES.PRODUCT_LIST_STOCK}`,
+                {params});
+
+            const {content, totalPages } = response.data;
+            setProductData(content);
+            setTotalPages(totalPages);
+
+        }catch (error){
+            console.log(error);
+        }
     }
 
     useEffect(() => {
@@ -66,12 +68,12 @@ const ProductList = () => {
         <Container>
             <Group>
                 <Select
-                    label="Filtro por categoria"
-                    placeholder="Selecione a categoria"
+                    label={t('product:filterByCategory')}
+                    placeholder={t('product:selectCategory')}
                     data={[
-                        {value: 'CATEGORY1', label: 'Categoria 1'},
-                        {value: 'CATEGORY2', label: 'Categoria 2'},
-                        {value: 'CATEGORY3', label: 'Categoria 3'}
+                        {value: 'CATEGORY1', label: t('product:CATEGORY1')},
+                        {value: 'CATEGORY2', label: t('product:CATEGORY2')},
+                        {value: 'CATEGORY3', label: t('product:CATEGORY3')},
                     ]}
                     value={productCategoryFilter}
                     onChange={handleCategoryChange}
@@ -80,7 +82,7 @@ const ProductList = () => {
                 </Select>
                 {productCategoryFilter &&(
                     <Button variant="outline" onClick={clearFilter}>
-                        Limpar filtro
+                        {t('common:clearFilter')}
                     </Button>
                 )}
             </Group>
@@ -127,7 +129,7 @@ const ProductList = () => {
                                     </Text>
 
                                     <Text fz="sm" mt="xs">
-                                        Estoque:
+                                        {t('product:stock')}:
                                         {stock}
                                     </Text>
                                 </Card.Section>
@@ -141,7 +143,7 @@ const ProductList = () => {
                                         </div>
                                         <Button onClick={() => navigateProduct(product.id)} radius="xl"
                                                 style={{flex: 1}}>
-                                            Detalhes
+                                            {t('common:details')}
                                         </Button>
                                     </Group>
                                 </Card.Section>
