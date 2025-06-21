@@ -39,13 +39,23 @@ const AddressRegister = () => {
         }
     });
 
-    const {mutate} = addressMutate();
-    const theme = useMantineTheme();
+    const { mutate } = addressMutate({
+        onSuccess: () => {
+            navigate(ROUTES.ADDRESS_LIST);
+        }
+    });    const theme = useMantineTheme();
 
     const handleSubmit = (values) => {
-        mutate(values);
-        navigate(ROUTES.ADDRESS_LIST);
-    }
+        mutate(values, {
+            onSuccess: () => {
+                navigate(ROUTES.ADDRESS_LIST);
+            },
+            onError: (error) => {
+                console.error('Erro ao salvar endereço:', error);
+                alert('Erro ao salvar o endereço. Verifique os campos ou tente novamente.');
+            }
+        });
+    };
 
     const getTranslation = (key) => {
         const translations = {

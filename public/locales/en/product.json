@@ -13,5 +13,8 @@
   "productDetails": "Product Details",
   "productId": "Product ID",
   "purchase": "Purchase",
-  "outOfStock": "Out of Stock"
+  "outOfStock": "Out of Stock",
+  "productManagement": "Product Management",
+  "createNewProduct": "Create new Product"
+
 }

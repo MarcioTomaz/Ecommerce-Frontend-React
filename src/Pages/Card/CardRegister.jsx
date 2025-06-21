@@ -93,6 +93,8 @@ const CardRegister = () => {
                                 placeholder="1234 5678 9012 3456"
                                 {...form.getInputProps('number')}
                                 mb="md"
+                                maxLength={19}
+                                minLength={19}
                             />
                         </Grid.Col>
 
@@ -123,6 +125,8 @@ const CardRegister = () => {
                                 placeholder="123"
                                 {...form.getInputProps('security')}
                                 mb="md"
+                                maxLength={3}
+                                minLength={3}
                             />
                         </Grid.Col>
 

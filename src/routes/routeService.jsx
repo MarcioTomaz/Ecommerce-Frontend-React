@@ -20,6 +20,8 @@ import OrderDetails from "../Pages/Order/OrderDetails.jsx";
 import PaymentStep from "../Pages/Order/OrderPayment.jsx";
 import AdmProfile from "../Pages/Adm/AdmProfile.jsx";
 import AdmOrderList from "../Pages/Adm/AdmOrderList.jsx";
+import ProductAdmList from "../Pages/Product/ProductAdmList.jsx";
+import ProductCreate from "../Pages/Product/ProductCreate.jsx";
 
 const RouteService = () => {
     return (
@@ -58,7 +60,8 @@ const RouteService = () => {
                     {/*ADM PAGES*/}
                     <Route path={ROUTES.ADM_PROFILE} element={<AdmProfile/>}></Route>
                     <Route path={ROUTES.ADM_ORDER_LIST} element={<AdmOrderList />} />
-
+                    <Route path={ROUTES.ADM_PRODUCT_LIST} element={<ProductAdmList/>}/>
+                    <Route path={ROUTES.ADM_CREATE_PRODUCT} element={<ProductCreate />} />
 
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>

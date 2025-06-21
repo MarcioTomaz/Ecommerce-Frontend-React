@@ -53,7 +53,7 @@ const NotificationButton = () => {
                     {notifications.length > 0 ? notifications.map(n => (
                         <div key={n.id}>
                             <Text fw={500}>{n.title}</Text>
-                            <Text size="sm" >{n.type}</Text>
+                            <Text size="sm" >{t(`notification:${n.type}`)}</Text>
                             <Text size="sm" c="dimmed">{n.message}</Text>
                             <Badge color="gray" variant="light" mt={4}>{t('notification:newNotification')}</Badge>
                         </div>

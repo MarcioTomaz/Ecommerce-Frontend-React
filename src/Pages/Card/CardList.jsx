@@ -59,7 +59,7 @@ const CardList = () => {
             <Table.Td>{row.alias}</Table.Td>
             <Table.Td>{row.flag}</Table.Td>
             <Table.Td>{row.id}</Table.Td>
-            <Table.Td>{row.number}</Table.Td>
+            <Table.Td>{row.number.slice(0,3) + '*'.repeat(row.number.length -3)}</Table.Td>
             <Table.Td>{row.holder}</Table.Td>
             <Table.Td>{row.expirationDate}</Table.Td>
             <Table.Td>

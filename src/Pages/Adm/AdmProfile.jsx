@@ -51,13 +51,13 @@ const AdmProfile = () => {
                     <Grid.Col span={6}><Text><strong>Nome:</strong> {userData?.personDTO.firstName} {userData?.personDTO.lastName}</Text></Grid.Col>
                     <Grid.Col span={6}><Text><strong>Email:</strong> {userData?.email}</Text></Grid.Col>
                     <Grid.Col span={6}><Text><strong>Cargo:</strong> {userData?.role}</Text></Grid.Col>
-                    {/*<Grid.Col span={6}><Text><strong>Data de Nascimento:</strong> {userData?.personDTO.birthDate}</Text></Grid.Col>*/}
-                    {/*<Grid.Col span={6}><Text><strong>Sexo:</strong> {userData?.personDTO.gender}</Text></Grid.Col>*/}
-                    {/*<Grid.Col span={12}><Text><strong>Telefone:</strong> {userData?.personDTO.phoneType}: {userData?.personDTO.phoneNumber}</Text></Grid.Col>*/}
                 </Grid>
                 <Divider my="sm" />
                 <Group position="center" mt="md">
-                    <Button variant="filled" color="cyan" radius="md" onClick={() => changePage(ROUTES.ADM_ORDER_LIST)}>Pedidos</Button>
+                    <Button variant="filled" color="orange" radius="md" onClick={() => changePage(ROUTES.ADM_ORDER_LIST)}>Pedidos</Button>
+                    <Button variant="filled" color="blue" radius="md" onClick={() => changePage(ROUTES.ADM_PRODUCT_LIST)}>Produtos</Button>
+                    <Button variant="filled" color="cyan" radius="md" onClick={() => changePage(ROUTES.ADM_ORDER_LIST)}>Estatisticas</Button>
+
                 </Group>
             </Card>
         </Container>

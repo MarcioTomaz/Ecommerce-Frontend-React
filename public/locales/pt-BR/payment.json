@@ -12,5 +12,6 @@
   "pixPayment": "Pagamento via PIX",
   "confirmPayment": "Confirmar pagamento",
   "creditCardPayment": "Pagamento via Cartão de Crédito",
-  "selectCreditCard": "Selecione um cartão"
+  "selectCreditCard": "Selecione um cartão",
+  "multiplePaymentMethods": "Multiplos métodos de pagamento"
 }

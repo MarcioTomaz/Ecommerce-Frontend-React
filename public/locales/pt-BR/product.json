@@ -13,5 +13,8 @@
   "productDetails": "Detalhes do Produto",
   "productId": "Id do Produto",
   "purchase": "Comprar",
-  "outOfStock": "Esgotado"
+  "outOfStock": "Esgotado",
+  "productManagement": "Gestão de Produto",
+  "createNewProduct": "Criar novo Produto"
+
 }

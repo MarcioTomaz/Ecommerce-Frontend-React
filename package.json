@@ -25,8 +25,12 @@
     "axios": "^1.7.2",
     "dayjs": "^1.11.11",
     "embla-carousel-react": "^8.1.5",
+    "i18next": "^25.2.1",
+    "i18next-browser-languagedetector": "^8.1.0",
+    "i18next-http-backend": "^3.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-i18next": "^15.5.2",
     "react-imask": "^7.6.1",
     "react-router-dom": "^6.25.1",
     "recharts": "^2.12.7"
