@@ -1,30 +1,30 @@
 import React from "react";
-import { Button, Group, TextInput, Paper, Container, Title, Grid } from "@mantine/core";
+import { Button, Group, TextInput, Paper, Container, Title, Grid, Select } from "@mantine/core";
 import { IMaskInput } from 'react-imask';
 import { useClientMutate } from "../../hooks/client/useClientMutate.jsx";
 import { DateInput } from "@mantine/dates";
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "@mantine/form";
 import { ROUTES } from "../../routes/URLS.jsx";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const RegisterPage = () => {
     const navigate = useNavigate();
-    const { t, i18n } = useTranslation(['common', 'registerPage']);
+    const { t } = useTranslation(['common', 'registerPage']);
 
     const form = useForm({
         mode: "uncontrolled",
         initialValues: {
             email: '',
             password: '',
-            userType: 'CLIENTE',
+            role: 'USER',
             personDTO: {
                 firstName: '',
                 lastName: '',
                 birthDate: null,
-                phoneNumber: null,
+                phoneNumber: '',
                 phoneType: 'FIXO',
-                gender: 'MASCULINO'
+                gender: ''
             },
         },
         validate: {
@@ -36,8 +36,8 @@ const RegisterPage = () => {
                 lastName: (value) => (value.length > 1 ? null : 'Invalid lastName'),
                 birthDate: (value) => (value != null ? null : 'Invalid birthDate'),
                 phoneType: value => (value != null ? null : 'Invalid phone type'),
-                phoneNumber: value => (value != null ? null : 'Invalid phone number'),
-                gender: (value) => (value != null ? null : 'Invalid gender'),
+                phoneNumber: value => (value != null && value.trim() !== '' ? null : 'Invalid phone number'),
+                gender: (value) => (value != null && value.trim() !== '' ? null : 'Invalid gender'),
             }
         }
     });
@@ -45,8 +45,14 @@ const RegisterPage = () => {
     const { mutate } = useClientMutate();
 
     const handleSubmit = (values) => {
-        mutate(values);
-        navigate(ROUTES.HOME);
+        mutate(values, {
+            onSuccess: () => {
+                navigate(ROUTES.HOME);
+            },
+            onError: (error) => {
+                console.error('Erro ao criar conta:', error);
+            }
+        });
     };
 
     return (
@@ -59,7 +65,7 @@ const RegisterPage = () => {
                         p={30}
                         mt={30}
                         radius="md"
-                        style={{ maxWidth: '600px', margin: 'auto' }} // Define uma largura máxima para o formulário
+                        style={{ maxWidth: '600px', margin: 'auto' }}
                     >
                         <Title order={2} align="center" mb="lg">
                             {t('registerPage:register')}
@@ -75,8 +81,8 @@ const RegisterPage = () => {
                             />
                             <TextInput
                                 withAsterisk
-                                label={t('common:email')}
-                                type="email"
+                                label={t('registerPage:password')}
+                                type="password"
                                 {...form.getInputProps('password')}
                                 mb="md"
                             />
@@ -92,12 +98,27 @@ const RegisterPage = () => {
                                 {...form.getInputProps('personDTO.lastName')}
                                 mb="md"
                             />
+
+                            <Select
+                                label={t('registerPage:gender')}
+                                placeholder={t('registerPage:chooseYourGender')}
+                                data={[
+                                    { value: 'MASCULINO', label: t('registerPage:male') },
+                                    { value: 'FEMININO', label: t('registerPage:female') },
+                                    { value: 'OUTRO', label: t('registerPage:other') },
+                                ]}
+                                {...form.getInputProps('personDTO.gender')}
+                                clearable
+                                mb="md"
+                            />
+
                             <DateInput
                                 label={t('registerPage:birthDate')}
                                 withAsterisk
                                 {...form.getInputProps('personDTO.birthDate')}
                                 mb="md"
                             />
+
                             <TextInput
                                 withAsterisk
                                 component={IMaskInput}
@@ -107,6 +128,7 @@ const RegisterPage = () => {
                                 {...form.getInputProps('personDTO.phoneNumber')}
                                 mb="md"
                             />
+
                             <Group position="center" mt="md">
                                 <Button fullWidth size="md" type="submit">{t('common:submit')}</Button>
                             </Group>

@@ -4,5 +4,11 @@
   "lastName": "Last name",
   "birthDate": "Birth Date",
   "phoneNumber": "Phone Number",
-  "yourPhone": "Your Phone Number"
+  "yourPhone": "Your Phone Number",
+  "password": "Password",
+  "gender": "Gender",
+  "chooseYourGender": "Select your gender",
+  "male": "Male",
+  "female": "Female",
+  "other": "Other"
 }

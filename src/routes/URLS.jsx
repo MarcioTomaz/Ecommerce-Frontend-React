@@ -38,6 +38,8 @@ export const ROUTES = {
     ADM_PROFILE: '/adm/profile',
     ADM_ORDER_LIST: '/adm/order/list',
     ADM_CREATE_PRODUCT: '/product/create',
-    ADM_PRODUCT_LIST: '/product/adm/list'
+    ADM_PRODUCT_LIST: '/product/adm/list',
+    ADM_EDIT_PRODUCT: '/product/edit/:productID',
+
 
 };

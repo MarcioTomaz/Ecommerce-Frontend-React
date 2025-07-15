@@ -1,12 +1,12 @@
 import React from 'react';
-import classes from './address.module.css';
 import {useNavigate} from "react-router-dom";
 import {Button, Container, Grid, Group, Paper, Select, TextInput, Title, useMantineTheme} from "@mantine/core";
-import {addressMutate} from "../../hooks/address/addressMutate.jsx";
+import {useAddressMutate} from "../../hooks/address/addressMutate.jsx";
 import {useForm} from "@mantine/form";
 import {ROUTES} from "../../routes/URLS.jsx";
 
 const AddressRegister = () => {
+    const theme = useMantineTheme();
 
     const navigate = useNavigate();
 
@@ -39,11 +39,14 @@ const AddressRegister = () => {
         }
     });
 
-    const { mutate } = addressMutate({
+    const { mutate, isLoading } = useAddressMutate({
         onSuccess: () => {
             navigate(ROUTES.ADDRESS_LIST);
-        }
-    });    const theme = useMantineTheme();
+        },
+        onError: (error) => {
+            console.error('Erro ao salvar endereço:', error);
+        },
+    });
 
     const handleSubmit = (values) => {
         mutate(values, {
@@ -52,7 +55,6 @@ const AddressRegister = () => {
             },
             onError: (error) => {
                 console.error('Erro ao salvar endereço:', error);
-                alert('Erro ao salvar o endereço. Verifique os campos ou tente novamente.');
             }
         });
     };
@@ -206,7 +208,7 @@ const AddressRegister = () => {
 
                         <Grid>
                             <Grid.Col span={6}>
-                                <Button type="submit" mt="md">Salvar</Button>
+                                <Button type="submit" mt="md" loading={isLoading}>Salvar</Button>
                             </Grid.Col>
                             <Grid.Col span={6}>
                                 <Button

@@ -101,7 +101,7 @@ const OrderClientList = () => {
                 />
                 {statusFilter && (
                     <Button variant="outline" onClick={clearFilter}>
-                        Limpar filtro
+                        {t('common:clearFilter')}
                     </Button>
                 )}
             </Group>

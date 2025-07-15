@@ -58,7 +58,7 @@ const ProductAdmList = () => {
     }
 
     const navigateProduct = (id) => {
-        navigate(ROUTES.ADM_CREATE_PRODUCT.replace(':id', id));
+        navigate(ROUTES.ADM_EDIT_PRODUCT.replace(':productID', id));
     }
 
     // const navigateProduct = (id) => {

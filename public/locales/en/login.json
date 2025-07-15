@@ -3,6 +3,7 @@
   "no_account_question": "Don't have an account? ",
   "create_account": "Create your account!",
   "password": "Password",
-  "password_forgot": "Forgot your password?"
+  "password_forgot": "Forgot your password?",
+  "loginError": "Either your email or password is incorrect, please check!"
 
 }

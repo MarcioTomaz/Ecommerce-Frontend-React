@@ -35,7 +35,6 @@
   "acceptOrder": "Aceitar Pedido",
   "rejectOrder": "Recusar Pedido",
   "rejectReason": "Motivo da recusa",
-  "proceedToPayment": "Prosseguir para o Pagamento"
-
-
+  "proceedToPayment": "Prosseguir para o Pagamento",
+  "orderDate": "Data do Pedido"
 }

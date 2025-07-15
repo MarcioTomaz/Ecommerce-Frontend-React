@@ -1,41 +1,28 @@
-import { useMutation } from "@tanstack/react-query";
-import { API_URL } from "../api.jsx";
-import axios from "axios";
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+import {API_URL} from "../api.jsx";
 
-const postData = async (data) => {
-    try {
-        const storedUser = localStorage.getItem('userLogin');
 
-        if (!storedUser) {
-            throw new Error("Usuário não autenticado.");
-        }
+const postAddress = async (data) => {
+    const token = localStorage.getItem('userLogin');
 
-        const parsedValue = JSON.parse(storedUser);
-        // Acessar o token salvo no usuário
-        const token = parsedValue.token;
-
-        if (!token) {
-            throw new Error("Token de autenticação não encontrado.");
-        }
-
-        // Configura os headers com o token de autenticação
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        };
-
-        // Realiza a requisição POST incluindo o header de autenticação
-        const response = await axios.post(`${API_URL}/address/create`, data, config);
-        return response.data;
-
-    } catch (error) {
-        throw error;
+    if (!token) {
+        throw new Error('Token de autenticação não encontrado.');
     }
-}
 
-export function addressMutate() {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+
+    const response = await axios.post(`${API_URL}/address/create`, data, config);
+    return response.data;
+};
+
+export function useAddressMutate(options = {}) {
     return useMutation({
-        mutationFn: postData,
+        mutationFn: postAddress,
+        ...options,  // Permite passar onSuccess, onError, etc
     });
 }

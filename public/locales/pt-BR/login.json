@@ -5,5 +5,7 @@
   "password": "Senha",
   "password_forgot": "Esqueceu sua senha?",
   "email": "E-mail",
-  "your_email" : "Seu_email@email.com"
+  "your_email" : "Seu_email@email.com",
+  "loginError": "Sua senha ou e-mail estão incorretos, por favor verifique!"
+
 }

@@ -5,6 +5,7 @@ import { ROUTES as ROTE, ROUTES } from "../../routes/URLS.jsx";
 import {Button, Container, Table, Pagination, Select, useMantineTheme, Group} from "@mantine/core";
 import { API_URL } from "../../hooks/api.jsx";
 import { useNavigate } from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 const AdmOrderList = () => {
     const { userToken } = useContext(AuthContext);
@@ -13,6 +14,7 @@ const AdmOrderList = () => {
     const [pageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
     const [statusFilter, setStatusFilter] = useState("PAID");
+    const { t, i18n } = useTranslation(['common', 'order']);
 
 
     const navigate = useNavigate();
@@ -69,7 +71,8 @@ const AdmOrderList = () => {
                     style={{ background: theme.colors.blue[9] }}
                     onClick={() => orderDetails(row.id)}
                 >
-                    Detalhes
+                    {t('common:details')}
+
                 </Button>
             </Table.Td>
         </Table.Tr>
@@ -80,17 +83,17 @@ const AdmOrderList = () => {
             {/* Filtro de status */}
             <Group mb="md" spacing="sm">
                 <Select
-                    label="Filtrar por status"
-                    placeholder="Selecione o status"
+                    label={t('order:filterByStatus')}
+                    placeholder={t('order:selectStatus')}
                     data={[
-                        { value: 'PENDING', label: 'Pendente' },
-                        { value: 'PROCESSING', label: 'Em Processamento' },
-                        { value: 'WAITING_FOR_PAYMENT', label: 'Aguardando Pagamento' },
-                        { value: 'PAID', label: 'Pago' },
-                        { value: 'SHIPPED', label: 'Enviado' },
-                        { value: 'DELIVERED', label: 'Entregue' },
-                        { value: 'CANCELED', label: 'Cancelado' },
-                        { value: 'EXPIRED', label: 'Expirado' }
+                        { value: 'PENDING', label: t('order:PENDING') },
+                        { value: 'PROCESSING', label: t('order:PROCESSING') },
+                        { value: 'WAITING_FOR_PAYMENT', label: t('order:WAITING_FOR_PAYMENT') },
+                        { value: 'PAID', label:t('order:PAID') },
+                        { value: 'SHIPPED', label: t('order:SHIPPED') },
+                        { value: 'DELIVERED', label: t('order:DELIVERED') },
+                        { value: 'CANCELED', label: t('order:CANCELED') },
+                        { value: 'EXPIRED', label: t('order:EXPIRED') }
 
                     ]}
                     value={statusFilter}
@@ -99,7 +102,7 @@ const AdmOrderList = () => {
                 />
                 {statusFilter && (
                     <Button variant="outline" onClick={clearFilter}>
-                        Limpar filtro
+                        {t('common:clearFilter')}
                     </Button>
                 )}
             </Group>
@@ -108,19 +111,19 @@ const AdmOrderList = () => {
                 <Table.Thead>
                     <Table.Tr>
                         <Table.Th style={{ width: "15%", textAlign: "center" }}>
-                            Id do Pedido
+                            {t('order:orderId')}
                         </Table.Th>
                         <Table.Th style={{ textAlign: "center" }}>
-                            Status
+                            {t('order:status')}
                         </Table.Th>
                         <Table.Th style={{ textAlign: "center" }}>
-                            Total
+                            {t('order:total')}
                         </Table.Th>
                         <Table.Th style={{ textAlign: "center" }}>
-                            Data do Pedido
+                            {t('order:orderDate')}
                         </Table.Th>
                         <Table.Th style={{ textAlign: "center" }}>
-                            Ações
+                            {t('common:actions')}
                         </Table.Th>
                     </Table.Tr>
                 </Table.Thead>
@@ -141,7 +144,7 @@ const AdmOrderList = () => {
                 type="button"
                 mt="md"
             >
-                Voltar
+                {t('common:back')}
             </Button>
         </Container>
     );

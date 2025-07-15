@@ -15,6 +15,7 @@
   "purchase": "Purchase",
   "outOfStock": "Out of Stock",
   "productManagement": "Product Management",
-  "createNewProduct": "Create new Product"
+  "createNewProduct": "Create new Product",
+  "name": "Product Name"
 
 }

@@ -1,22 +1,24 @@
-import React, {useContext, useState} from "react";
-import { Container, Grid, Paper, Title, TextInput, NumberInput, Select, Button, Group } from "@mantine/core";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "@mantine/form";
-import { useTranslation } from "react-i18next";
-import { DateInput } from "@mantine/dates";
-import { ROUTES } from "../../routes/URLS.jsx";
+import React, {useContext, useEffect, useState} from "react";
+import {Container, Grid, Paper, Title, TextInput, NumberInput, Select, Button, Group} from "@mantine/core";
+import {useNavigate, useParams} from "react-router-dom";
+import {useForm} from "@mantine/form";
+import {useTranslation} from "react-i18next";
+import {DateInput} from "@mantine/dates";
+import {ROUTES} from "../../routes/URLS.jsx";
 import axios from "axios";
 import {API_URL} from "../../hooks/api.jsx";
 import {AuthContext} from "../../GlobalConfig/AuthContext.jsx";
 
 const ProductCreate = () => {
     const navigate = useNavigate();
-    const { t, i18n } = useTranslation(['common', 'product']);
-    const { login, userToken } = useContext(AuthContext);
+    const {t, i18n} = useTranslation(['common', 'product']);
+    const {login, userToken} = useContext(AuthContext);
+    const {productID} = useParams();
+    const [productDetails, setProductDetails] = useState(null);
 
     const form = useForm({
-        mode: "uncontrolled",
         initialValues: {
+            id: '',
             product_name: '',
             product_description: '',
             product_price: 0,
@@ -32,17 +34,47 @@ const ProductCreate = () => {
         }
     });
 
+
+    useEffect(() => {
+        if (productID) {
+            getProductDetails();
+        }
+    }, [productID]);
+
+    const getProductDetails = async () => {
+        try {
+            const response = await axios(`${API_URL}/product/read/${productID}`);
+            const data = response.data;
+
+            setProductDetails(data);
+            form.setValues({
+                id: data.id,
+                product_name: data.product_name,
+                product_description: data.product_description,
+                product_price: data.product_price,
+                productCategory: data.productCategory,
+                stock: data.stock,
+                currencyId: data.currency.id,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const handleSubmit = (values) => {
-        createProduct(values)
+        editProduct(values)
         // navigate(ROUTES.PRODUCT_LIST);  // Ajuste a rota de destino conforme seu projeto
     };
 
-    const createProduct = async (values) => {
+    const editProduct = async (values) => {
 
         try {
-            const response = await axios.post(`${API_URL}/product/create`,values,
-                {headers:{'Authorization': `Bearer ${userToken}` }})
-        }catch (error) {
+            const response = await axios.put(`${API_URL}/product/update/${productID}`, values,
+                {headers: {'Authorization': `Bearer ${userToken}`}});
+
+            navigate(ROUTES.ADM_PRODUCT_LIST);
+
+        } catch (error) {
             console.log(error);
         }
     }
@@ -57,7 +89,7 @@ const ProductCreate = () => {
                         p={30}
                         mt={30}
                         radius="md"
-                        style={{ maxWidth: '600px', margin: 'auto' }}
+                        style={{maxWidth: '600px', margin: 'auto'}}
                     >
                         <Title order={2} align="center" mb="lg">
                             {t('product:productManagement')}
@@ -90,21 +122,21 @@ const ProductCreate = () => {
                                 withAsterisk
                                 label={t('product:category')}
                                 data={[
-                                    { value: 'CATEGORY1', label: t('product:CATEGORY1') },
-                                    { value: 'CATEGORY2', label: t('product:CATEGORY2') },
-                                    { value: 'CATEGORY3', label: t('product:CATEGORY3') },
+                                    {value: 'CATEGORY1', label: t('product:CATEGORY1')},
+                                    {value: 'CATEGORY2', label: t('product:CATEGORY2')},
+                                    {value: 'CATEGORY3', label: t('product:CATEGORY3')},
                                 ]}
                                 {...form.getInputProps('productCategory')}
                                 mb="md"
                             />
 
-                            <NumberInput
-                                withAsterisk
-                                label={t('product:stock')}
-                                min={0}
-                                {...form.getInputProps('stock')}
-                                mb="md"
-                            />
+                            {/*<NumberInput*/}
+                            {/*    withAsterisk*/}
+                            {/*    label={t('product:stock')}*/}
+                            {/*    min={0}*/}
+                            {/*    {...form.getInputProps('stock')}*/}
+                            {/*    mb="md"*/}
+                            {/*/>*/}
 
                             <Group position="center" mt="md">
                                 <Button fullWidth size="md" type="submit">

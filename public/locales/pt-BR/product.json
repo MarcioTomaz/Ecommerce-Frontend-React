@@ -15,6 +15,6 @@
   "purchase": "Comprar",
   "outOfStock": "Esgotado",
   "productManagement": "Gestão de Produto",
-  "createNewProduct": "Criar novo Produto"
-
+  "createNewProduct": "Criar novo Produto",
+  "name": "Nome do Produto"
 }

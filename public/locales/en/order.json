@@ -15,6 +15,7 @@
   "country": "Country",
   "proceedPayment": "Proceed to Payment",
   "method": "Method",
+  "orderDate": "Order Date",
 
   "CREDIT_CARD": "Credit Card",
   "PIX": "Brazilian Pix",

@@ -1,11 +1,12 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {Anchor, Text, Button, Container, Group, TextInput, Title, Paper} from "@mantine/core";
+import {Anchor, Text, Button, Container, Group, TextInput, Title, Paper, Alert} from "@mantine/core";
 import {useForm} from "@mantine/form";
 import {useClientLogin} from "../../hooks/client/useClientLogin.jsx";
 import classes from './login.module.css';
 import {AuthContext} from "../../GlobalConfig/AuthContext.jsx";
 import {useTranslation} from "react-i18next";
+import {IconInfoCircle} from "@tabler/icons-react";
 
 const Login = () => {
     const {login, userToken} = useContext(AuthContext);
@@ -13,7 +14,8 @@ const Login = () => {
     const {mutate, isError, error} = useClientLogin();
     const navigate = useNavigate();
     const { t, i18n } = useTranslation(['common', 'login']);
-
+    const [notificationError, setNotificationError] = useState(false);
+    const icon = <IconInfoCircle/>;
 
     const form = useForm({
         mode: 'uncontrolled',
@@ -27,7 +29,6 @@ const Login = () => {
     });
 
     useEffect(() => {
-
         if (userToken) {
             navigate('/profile');
         }
@@ -40,11 +41,16 @@ const Login = () => {
 
             },
             onError: (error) => {
-                console.error('Error during mutation:', error);
+                setNotificationError(true);
+                // console.error('Error during mutation:', error);
                 setErrorMessage(error.response?.data?.message || 'Ocorreu um erro durante a requisição.');
             }
         });
     };
+
+    const handleCloseNotificationError = () => {
+        setNotificationError(false);
+    }
 
     return (
         <Container size={420} my={40}>
@@ -60,6 +66,12 @@ const Login = () => {
             </Text>
 
             <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+
+                {notificationError &&(
+                    <Alert variant="filled" color="red" withCloseButton title={t('login:loginError')} icon={icon}
+                           onClose={handleCloseNotificationError}>
+                    </Alert>
+                )}
                 <form onSubmit={form.onSubmit(handleSubmit)}>
                     <TextInput
                         withAsterisk

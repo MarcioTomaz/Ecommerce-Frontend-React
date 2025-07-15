@@ -4,5 +4,12 @@
   "lastName": "Sobrenome",
   "birthDate": "Data de aniversário",
   "phoneNumber": "Telefone",
-  "yourPhone": "Seu Telefone"
+  "yourPhone": "Seu Telefone",
+  "password": "Senha",
+  "gender": "Gênero",
+  "chooseYourGender": "Selecione o seu genero",
+  "male": "Masculino",
+  "female": "Feminino",
+  "other": "Outro"
+
 }

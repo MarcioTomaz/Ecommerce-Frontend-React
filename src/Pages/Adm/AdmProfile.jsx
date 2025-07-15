@@ -5,6 +5,7 @@ import { API_URL } from "../../hooks/api.jsx";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../routes/URLS.jsx";
 import {AuthContext} from "../../GlobalConfig/AuthContext.jsx";
+import {useTranslation} from "react-i18next";
 
 const AdmProfile = () => {
 
@@ -12,6 +13,7 @@ const AdmProfile = () => {
     const [userData, setUserData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { t, i18n } = useTranslation(['common', 'admProfile', 'profile']);
 
     const navigate = useNavigate();
 
@@ -45,18 +47,18 @@ const AdmProfile = () => {
     return (
         <Container size="md" style={{ marginTop: 40 }}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
-                <Title order={2} align="center" style={{ marginBottom: 20 }}>Perfil Administrador</Title>
+                <Title order={2} align="center" style={{ marginBottom: 20 }}>{t('admProfile:admProfile')}</Title>
                 <Divider my="sm" />
                 <Grid gutter="md">
-                    <Grid.Col span={6}><Text><strong>Nome:</strong> {userData?.personDTO.firstName} {userData?.personDTO.lastName}</Text></Grid.Col>
-                    <Grid.Col span={6}><Text><strong>Email:</strong> {userData?.email}</Text></Grid.Col>
-                    <Grid.Col span={6}><Text><strong>Cargo:</strong> {userData?.role}</Text></Grid.Col>
+                    <Grid.Col span={6}><Text><strong>{t('common:name')}:</strong> {userData?.personDTO.firstName} {userData?.personDTO.lastName}</Text></Grid.Col>
+                    <Grid.Col span={6}><Text><strong>{t('common:email')}:</strong> {userData?.email}</Text></Grid.Col>
+                    <Grid.Col span={6}><Text><strong>{t('admProfile:role')}:</strong> {userData?.role}</Text></Grid.Col>
                 </Grid>
                 <Divider my="sm" />
                 <Group position="center" mt="md">
-                    <Button variant="filled" color="orange" radius="md" onClick={() => changePage(ROUTES.ADM_ORDER_LIST)}>Pedidos</Button>
-                    <Button variant="filled" color="blue" radius="md" onClick={() => changePage(ROUTES.ADM_PRODUCT_LIST)}>Produtos</Button>
-                    <Button variant="filled" color="cyan" radius="md" onClick={() => changePage(ROUTES.ADM_ORDER_LIST)}>Estatisticas</Button>
+                    <Button variant="filled" color="orange" radius="md" onClick={() => changePage(ROUTES.ADM_ORDER_LIST)}>{t('admProfile:ordersButton')}</Button>
+                    <Button variant="filled" color="blue" radius="md" onClick={() => changePage(ROUTES.ADM_PRODUCT_LIST)}>{t('admProfile:productsButton')}</Button>
+                    <Button variant="filled" color="cyan" radius="md" onClick={() => changePage(ROUTES.ADM_ORDER_LIST)}>{t('admProfile:statisticsButton')}</Button>
 
                 </Group>
             </Card>
