@@ -41,7 +41,7 @@ const AddressRegister = () => {
 
     const { mutate, isLoading } = useAddressMutate({
         onSuccess: () => {
-            navigate(ROUTES.ADDRESS_LIST);
+            navigate(-1);
         },
         onError: (error) => {
             console.error('Erro ao salvar endereço:', error);
@@ -51,7 +51,7 @@ const AddressRegister = () => {
     const handleSubmit = (values) => {
         mutate(values, {
             onSuccess: () => {
-                navigate(ROUTES.ADDRESS_LIST);
+                navigate(-1);
             },
             onError: (error) => {
                 console.error('Erro ao salvar endereço:', error);

@@ -109,6 +109,10 @@ const ProductAdmList = () => {
                 position="center"
                 mt="md"
             />
+
+            <Button color="orange" onClick={() => navigate(ROUTES.ADM_PROFILE)}
+                    type="button"
+                    mt="md">{t('common:back')}</Button>
         </Container>
     )
 

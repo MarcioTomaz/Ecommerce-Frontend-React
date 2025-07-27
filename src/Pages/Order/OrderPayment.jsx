@@ -1,4 +1,4 @@
-import {useCallback, useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import {
     Card,
     Container,
@@ -11,13 +11,15 @@ import {
     Image,
     Radio,
     TextInput,
-    NumberInput
+    NumberInput, Alert
 } from "@mantine/core";
 import {useNavigate, useParams} from "react-router-dom";
 import {AuthContext} from "../../GlobalConfig/AuthContext.jsx";
 import axios from "axios";
 import {API_URL} from "../../hooks/api.jsx";
 import {useTranslation} from "react-i18next";
+import {IconInfoCircle} from '@tabler/icons-react';
+import {ROUTES} from "../../routes/URLS.jsx";
 
 const PaymentStep = () => {
     const [paymentMethod, setPaymentMethod] = useState("single");
@@ -31,7 +33,9 @@ const PaymentStep = () => {
     const [paymentPix, setPaymentPix] = useState(10);
     const [paymentCard, setPaymentCard] = useState(10);
     const navigate = useNavigate();
-    const { t, i18n } = useTranslation(['common', 'payment',]);
+    const {t, i18n} = useTranslation(['common', 'payment', 'card']);
+
+    const [filteredOptions, setFilteredOptions] = useState([]);
 
 
     const {id} = useParams();
@@ -60,11 +64,28 @@ const PaymentStep = () => {
             setTotalOrders(orderRes.data.cart);
             setCards(cardRes.data);
 
-            console.log("Cards:", cardRes.data);
+
+            console.log("Cards:", cards.length);
         } catch (error) {
             console.log(error);
         }
     }, [id, userToken]);
+
+    useEffect(() => {
+        const paymentOptions = [
+            {value: "single", label: t('payment:singlePayment')},
+            {value: "multiple", label: t('payment:multiplePaymentMethods')},
+        ];
+
+        // Condição corrigida: use .length para arrays
+        if (cards.length > 0) {
+            setFilteredOptions(paymentOptions);
+        } else {
+            // Filtra a opção 'multiple' se não houver cartões
+            setFilteredOptions(paymentOptions.filter(option => option.value !== 'multiple'));
+        }
+    }, [cards, t]); // Dependência: execute esta lógica quando `cards` ou a função de tradução `t` mudar
+
 
     useEffect(() => {
         fetchData();
@@ -193,6 +214,19 @@ const PaymentStep = () => {
         }
     }
 
+    const icon = <IconInfoCircle/>;
+
+    const filteredPaymentOptions = () =>{
+        const paymentOptions = [
+            {value: "single", label: t('payment:singlePayment')},
+            {value: "multiple", label: t('payment:multiplePaymentMethods')},
+        ];
+
+        let filteredResult = cards > 0 ? paymentOptions : paymentOptions.filter(option => option.value !== 'multiple');
+        setfilteredOptions(filteredResult);
+    }
+
+
 
     return (
         <Container size="md" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
@@ -219,10 +253,7 @@ const PaymentStep = () => {
                                 setSelectedCard(null);
                                 setSelectedMethods([]);
                             }}
-                            data={[
-                                {value: "single", label: t('payment:singlePayment')},
-                                {value: "multiple", label: t('payment:multiplePaymentMethods')},
-                            ]}
+                            data={filteredOptions}
                         />
                     </Grid.Col>
 
@@ -232,11 +263,23 @@ const PaymentStep = () => {
                             value={selectedMethods}
                             onChange={handleMethodChange}
                         >
+                            {cards < 1 && (
+                                <Alert variant="outline" color="red" title={t('common:alert')} icon={icon} p={6}>
+                                    {t('payment:noCardAvailable')}
+                                    <br/>
+                                    <Button onClick={() => navigate(ROUTES.CARD_REGISTER)} size="xs" color="red">
+                                        {t('card:registerNewCard')}
+                                    </Button>
+
+                                </Alert>
+                            )}
+
                             <Group mt="xs">
+
                                 <Checkbox
                                     value="credit_card"
                                     label={t('payment:creditCard')}
-                                    disabled={paymentMethod === "single" && selectedMethods.length > 0 && selectedMethods[0] !== "credit_card"}
+                                    disabled={(paymentMethod === "single" && selectedMethods.length > 0 && selectedMethods[0] !== "credit_card") || cards.length < 1}
                                 />
                                 <Checkbox
                                     value="pix"

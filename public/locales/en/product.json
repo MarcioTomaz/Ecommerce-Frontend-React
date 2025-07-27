@@ -16,6 +16,13 @@
   "outOfStock": "Out of Stock",
   "productManagement": "Product Management",
   "createNewProduct": "Create new Product",
-  "name": "Product Name"
-
+  "name": "Product Name",
+  "itemAdded": "Product added to cart!",
+  "modalMessage": "Would you like to go to the cart or continue shopping?",
+  "continueShopping": "Continue shopping",
+  "goToCart": "Go to cart",
+  "waitList": "WaitList",
+  "waitListSuccessTitle": "Successfully Added!",
+  "waitListSuccessMessage": "You have been added to the waitlist. We will notify you when the product is back in stock.",
+  "waitListErrorMessage": "Could not add to the waitlist. Please try again later."
 }

@@ -16,5 +16,13 @@
   "outOfStock": "Esgotado",
   "productManagement": "Gestão de Produto",
   "createNewProduct": "Criar novo Produto",
-  "name": "Nome do Produto"
+  "name": "Nome do Produto",
+  "modalMessage": "Deseja ir para o carrinho ou continuar comprando?",
+  "continueShopping": "Continuar comprando",
+  "goToCart": "Ir para o carrinho",
+  "itemAdded": "Produto adicionado ao carrinho!",
+  "waitList": "Lista de espera",
+  "waitListSuccessTitle": "Adicionado com Sucesso!",
+  "waitListSuccessMessage": "Você foi adicionado à lista de espera. Avisaremos quando o produto retornar ao estoque.",
+  "waitListErrorMessage": "Não foi possível adicionar à lista de espera. Por favor, tente novamente mais tarde."
 }

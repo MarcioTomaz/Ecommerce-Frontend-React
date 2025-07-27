@@ -16,6 +16,7 @@ const CartDetails = () => {
     const {login, userToken} = useContext(AuthContext);
     const theme = useMantineTheme();
     const [notificationError, setNotificationError] = useState(false);
+    const [ errorMessage, setErrorMessage ] = useState('');
     const { t, i18n } = useTranslation(['common', 'cart', 'product']);
 
     const icon = <IconInfoCircle/>;
@@ -83,7 +84,6 @@ const CartDetails = () => {
 
         if(finalOrderItems.items.length <= 0){
             setNotificationError(true);
-
             return;
         }
 
@@ -91,17 +91,19 @@ const CartDetails = () => {
             await axios.post(`${API_URL}/cart/create`, finalOrderItems,
                 {headers: {'Authorization': `Bearer ${userToken}`}});
 
-            navigate(ROUTES.CHECKOUT)
+            navigate(ROUTES.CHECKOUT);
 
         } catch (e) {
             setNotificationError(true);
-            console.log("Erro carrinho:" + e)
+            setErrorMessage(e.response.data.message);
+            console.log("Erro carrinho:" + e.response.data.message);
         }
 
     };
 
     const handleCloseNotificationError = () => {
         setNotificationError(false);
+        setErrorMessage('');
     }
 
     return (
@@ -110,7 +112,7 @@ const CartDetails = () => {
             {notificationError && (
                 <Alert variant="filled" color="red" withCloseButton title={t('cart:errorTitle')} icon={icon}
                        onClose={handleCloseNotificationError}>
-                    {t('cart:errorCart')}
+                    {errorMessage}
                 </Alert>
             )}
 

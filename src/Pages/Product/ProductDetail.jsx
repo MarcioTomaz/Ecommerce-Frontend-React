@@ -1,39 +1,41 @@
-import {Container, Grid, Paper, Title, Text, Textarea, Button, NumberInput, useMantineTheme} from "@mantine/core";
-import React, {useContext, useEffect, useState, startTransition} from "react"; // <--- Importe startTransition
+import {
+    Container, Grid, Paper, Title, Text, Textarea, Button, NumberInput, useMantineTheme, Modal, Group
+} from "@mantine/core";
+import { notifications } from '@mantine/notifications';
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../../hooks/api.jsx";
 import { ROUTES } from "../../routes/URLS.jsx";
-import {AuthContext} from "../../GlobalConfig/AuthContext.jsx";
-import {useTranslation} from "react-i18next";
+import { AuthContext } from "../../GlobalConfig/AuthContext.jsx";
+import { useTranslation } from "react-i18next";
 
 const ProductDetail = () => {
-
     const [productData, setProductData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [quantity, setQuantity] = useState(1);
+    const [opened, setOpened] = useState(false); // controla modal
+    const { userToken, userRole } = useContext(AuthContext);
+
     const navigate = useNavigate();
     const { id } = useParams();
-    const [quantity, setQuantity] = useState(1);
     const theme = useMantineTheme();
-    const { t, i18n } = useTranslation(['common', 'product']);
+    const { t } = useTranslation(['common', 'product']);
 
     useEffect(() => {
         fetchProductDetails();
-    },[])
+    }, []);
 
     const fetchProductDetails = async () => {
         try {
             const response = await axios.get(`${API_URL}${ROUTES.PRODUCT_READ_ID}/${id}`);
             setProductData(response.data);
             setIsLoading(false);
-
-
-        }catch (error) {
+        } catch (error) {
             setError(error);
         }
-    }
-
+    };
 
     const addToCart = (idItem, quantityItem, productName, productPrice) => {
         const cartStorage = localStorage.getItem("cartItem");
@@ -41,29 +43,64 @@ const ProductDetail = () => {
 
         const existingItemCart = cartData.findIndex(item => item.product.id === idItem);
 
-        if(existingItemCart !== -1) {
+        if (existingItemCart !== -1) {
             cartData[existingItemCart].quantity += quantityItem;
-        }else{
+        } else {
             cartData.push({
-                product: { id: idItem, name: productName, price: productPrice  },
+                product: { id: idItem, name: productName, price: productPrice },
                 quantity: quantityItem
             });
         }
-        // Salva no localStorage
+
         localStorage.setItem("cartItem", JSON.stringify(cartData));
-
         console.log("Carrinho atualizado:", cartData);
+    };
 
-        startTransition(() => {
-            navigate(ROUTES.CART_DETAILS);
-        });
+    const handleWaitList = async () => {
+        try {
+            const waitListProduct = {
+                productId: productData.id,
+                timestamp: new Date().toISOString()
+            };
+
+            await axios.post(`${API_URL}/product/waitlist`,
+                waitListProduct,
+                { headers: { 'Authorization': `Bearer ${userToken}` } }
+            );
+
+            notifications.show({
+                title: t('product:waitListSuccessTitle'),
+                message: t('product:waitListSuccessMessage'),
+                color: 'green',
+                autoClose: 10000, // 10 segundos
+            });
+
+        } catch (error) {
+            console.error("Erro ao adicionar à lista de espera:", error);
+            notifications.show({
+                title: t('common:error'),
+                message: t('product:waitListErrorMessage'),
+                color: 'red',
+            });
+        }
+    }
+
+    const handleBuyClick = () => {
+        addToCart(productData?.id, quantity, productData?.product_name, productData?.product_price);
+        setOpened(true);
+    };
+
+    const handleGoToCart = () => {
+        setOpened(false);
+        navigate(ROUTES.CART_DETAILS);
+    };
+
+    const handleContinueShopping = () => {
+        setOpened(false);
     };
 
     const handleGoBackToList = () => {
-
-        startTransition(() => {
-            navigate(ROUTES.PRODUCT_LIST);
-        });
+        navigate(ROUTES.PRODUCT_LIST);
     };
 
     return (
@@ -113,27 +150,62 @@ const ProductDetail = () => {
                             min={1}
                             max={productData?.stock || 1}
                             value={quantity}
+                            disabled={productData?.stock < 1}
                             onChange={setQuantity}
                         />
 
-
                         <Button
-                            onClick={() => addToCart(productData?.id, quantity,
-                                productData?.product_name,
-                                productData?.product_price,)}
+                            onClick={handleBuyClick}
                             variant="filled"
                             color="yellow"
                             size="lg"
                             radius="lg"
-                            disabled = {productData?.stock === 0}
+                            disabled={productData?.stock === 0}
                         >
-                            {productData?.stock !== 0 ?  t('product:purchase') : t('product:outOfStock')}
+                            {productData?.stock !== 0
+                                ? t('product:purchase')
+                                : t('product:outOfStock')}
                         </Button>
+
+                        {productData?.stock == 0 && (
+                            <Button
+                                color="orange"
+                                size="lg"
+                                radius="lg"
+                                onClick={handleWaitList}
+                            >
+                                {t('product:waitList')}
+                            </Button>
+                        )}
 
                     </Grid.Col>
                 </Grid>
-                <Button style={{background: theme.colors.yellow[9]}} onClick={handleGoBackToList} type="button"
-                        mt="md">{t('common:back')}</Button>
+
+                <Button
+                    style={{ background: theme.colors.yellow[9] }}
+                    onClick={handleGoBackToList}
+                    type="button"
+                    mt="md"
+                >
+                    {t('common:back')}
+                </Button>
+
+                <Modal
+                    opened={opened}
+                    onClose={() => setOpened(false)}
+                    title={t('product:itemAdded')}
+                    centered
+                >
+                    <Text>{t('product:modalMessage')}</Text>
+                    <Group position="apart" mt="md">
+                        <Button variant="light" color="gray" onClick={handleContinueShopping}>
+                            {t('product:continueShopping')}
+                        </Button>
+                        <Button color="yellow" onClick={handleGoToCart}>
+                            {t('product:goToCart')}
+                        </Button>
+                    </Group>
+                </Modal>
             </Paper>
         </Container>
     );

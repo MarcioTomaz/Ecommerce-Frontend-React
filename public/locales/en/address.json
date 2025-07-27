@@ -15,7 +15,7 @@
   "shippingAddress": "Shipping Address",
   "billingAddress": "Billing Address",
   "selectAddress": "Select address",
-  "useSameShippingAddress": "Use the same shipping address"
-
+  "useSameShippingAddress": "Use the same shipping address",
+  "addressEmpty": "No address registered!"
 
 }

@@ -47,7 +47,8 @@ const CardRegister = () => {
 
                 await axios.post(`${API_URL}/card/create`, formattedValues,
                     {headers: {'Authorization': `Bearer ${userToken}`}}, );
-                navigate(ROUTES.CARD_LIST);
+                navigate(-1);
+
             } catch (error) {
                 console.error('Erro ao cadastrar o cartão!', error);
             }

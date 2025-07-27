@@ -15,6 +15,6 @@
   "shippingAddress": "Endereço de entrega",
   "billingAddress": "Endereço de cobrança",
   "selectAddress": "Selecione o endereço",
-  "useSameShippingAddress": "Usar o mesmo endereço de entrega"
-
+  "useSameShippingAddress": "Usar o mesmo endereço de entrega",
+  "addressEmpty": "Nenhum endereço cadastrado!"
 }

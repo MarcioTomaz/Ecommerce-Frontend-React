@@ -12,6 +12,8 @@
   "confirmPayment": "Confirm Payment",
   "pixPayment": "Pix Payment",
   "creditCardPayment": "Credit Card Payment",
-  "selectCreditCard": "Select a Credit Card"
+  "selectCreditCard": "Select a Credit Card",
+  "noCardAvailable": "No card Available"
+
 }
 

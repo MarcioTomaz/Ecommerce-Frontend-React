@@ -5,7 +5,7 @@
   "choosePayment": "Escolha o tipo de Pagamento",
   "singlePayment": "Pagamento único",
   "moreThanOneMethod": "Mais de um método",
-  "SelectPaymentMethods":"Selecione os métodos de pagamento",
+  "selectPaymentMethods":"Selecione os métodos de pagamento",
   "creditCard": "Cartão de Crédito",
   "pix": "Pix",
   "selectACard": "Selecione um cartão",
@@ -13,5 +13,7 @@
   "confirmPayment": "Confirmar pagamento",
   "creditCardPayment": "Pagamento via Cartão de Crédito",
   "selectCreditCard": "Selecione um cartão",
-  "multiplePaymentMethods": "Multiplos métodos de pagamento"
+  "multiplePaymentMethods": "Multiplos métodos de pagamento",
+  "noCardAvailable": "Nenhum cartão cadastrado."
+
 }
