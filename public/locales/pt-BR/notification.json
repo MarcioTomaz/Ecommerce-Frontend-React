@@ -1,5 +1,6 @@
 {
   "newNotification": "Nova",
   "noNotification": "Nenhuma notificação",
-  "ORDER_UPDATE": "Atualização do Pedido"
+  "ORDER_UPDATE": "Atualização do Pedido",
+  "read": "Lido"
 }

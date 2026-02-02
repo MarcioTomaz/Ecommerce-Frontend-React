@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Popover, ActionIcon, Text, Stack, Badge, Pagination} from '@mantine/core';
+import {Popover, ActionIcon, Text, Stack, Badge, Pagination, Button} from '@mantine/core';
 import {IconBell} from '@tabler/icons-react';
 import axios from "axios";
 import {API_URL} from "../../hooks/api.jsx";
@@ -17,6 +17,21 @@ const NotificationButton = () => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const { t, i18n } = useTranslation(['common', 'notification']);
+
+    const markAsRead = async (id) => {
+        try {
+            await axios.put(
+                `${API_URL}/notification/read`,
+                { id },
+                { headers: { Authorization: `Bearer ${userToken}` } }
+            );
+            setNotifications((prev) =>
+                prev.map((n) => (n.id === id ? { ...n, read: true } : n))
+            );
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const fetchNotifications = async (pageNumber) => {
         try {
@@ -55,7 +70,20 @@ const NotificationButton = () => {
                             <Text fw={500}>{n.title}</Text>
                             <Text size="sm" >{t(`notification:${n.type}`)}</Text>
                             <Text size="sm" c="dimmed">{n.message}</Text>
-                            <Badge color="gray" variant="light" mt={4}>{t('notification:newNotification')}</Badge>
+                            {!n.isRead && (
+                                <Badge color="gray" variant="light" mt={4}>
+                                    {t('notification:newNotification')}
+                                </Badge>
+                            )}
+                            <Button
+                                size="xs"
+                                variant="light"
+                                mt={6}
+                                disabled={n.isRead}
+                                onClick={() => markAsRead(n.id)}
+                            >
+                                {t('notification:read') ?? 'Lido'}
+                            </Button>
                         </div>
                     )) : (
                         <Text size="sm" c="dimmed">{t('notification:')}</Text>

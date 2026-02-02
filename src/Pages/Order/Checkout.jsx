@@ -140,7 +140,6 @@ const Checkout = () => {
                                         value: String(a.id),
                                         label: `${a.street}, ${a.number}, ${a.city}`,
                                     }))}
-                                    key={Math.random()}
                                     value={billingAddress}
                                     onChange={setBillingAddress}
                                     placeholder={t("address:selectAddress")}
@@ -155,8 +154,8 @@ const Checkout = () => {
                 </Text>
                 <Divider my="md" />
 
-                {cartItems.map((item) => (
-                    <Group key={item.id} position="apart">
+                {cartItems.map((item, index) => (
+                    <Group key={`${item.id}-${index}`} position="apart">
                         <Text>
                             {item.product_name} x{item.quantity}
                         </Text>

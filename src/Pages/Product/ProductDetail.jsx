@@ -96,6 +96,7 @@ const ProductDetail = () => {
     };
 
     const handleContinueShopping = () => {
+        navigate(ROUTES.PRODUCT_LIST);
         setOpened(false);
     };
 

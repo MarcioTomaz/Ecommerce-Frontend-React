@@ -1,6 +1,7 @@
 
 {
   "newNotification": "New",
-  "noNotification": "No new notifications"
+  "noNotification": "No new notifications",
+  "read": "Read"
 
 }
