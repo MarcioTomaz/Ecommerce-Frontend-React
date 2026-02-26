@@ -78,6 +78,7 @@ const Login = () => {
                         label={t('common:email')}
                         placeholder={t('common:your_email')}
                         key={form.key('email')}
+                        data-testid="login-email"
                         {...form.getInputProps('email')}
                     />
 
@@ -87,11 +88,12 @@ const Login = () => {
                         placeholder={t("login:password")}
                         type="password"
                         key={form.key('password')}
+                        data-testid="login-password"
                         {...form.getInputProps('password')}
                     />
 
                     <Group justify="flex-end" mt="md">
-                        <Button type="submit">{t("common:submit")}</Button>
+                        <Button type="submit" data-testid="login-submit" >{t("common:submit")}</Button>
                     </Group>
 
                     <Anchor component="button" size="sm">
@@ -100,7 +102,7 @@ const Login = () => {
                 </form>
             </Paper>
 
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
+            {errorMessage && <div className="error-message" data-testid="login-error-alert">{errorMessage}</div>}
         </Container>
     );
 }
